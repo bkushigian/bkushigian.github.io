@@ -4,3 +4,6 @@
 
 layout: home
 ---
+
+I tend to get distracted by things. I also tend to take on big projects that
+don't get completed. This website is evidence of both of these phenomena.
