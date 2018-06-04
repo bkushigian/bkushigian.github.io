@@ -608,7 +608,7 @@ good to have both of these be performed in a single place.
 
 There is also the issue of parentheses. It would be nice to simplify `1 + (a +
 5) + 4` in `complicatedConstantFold()` but we don't. That can be added easily
-enough, though and may be a fun exercise for the reader.
+enough though and may be a fun exercise for the reader.
 
 
 
