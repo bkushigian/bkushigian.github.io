@@ -347,7 +347,7 @@ parent is `(* (* years 60) 60)`, etc, and our AST is of the form
      365)
 {% endhighlight %}
 
-The root node has the literal `356` for its right branch, and its left branch has
+The root node has the literal `365` for its right branch, and its left branch has
 the literal `24` for *its* right branch. In particular, we have
 an expression tree of the form
 
