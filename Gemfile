@@ -12,7 +12,7 @@ gem "jekyll", "~> 3.8.2"
 
 # This is the default theme for new Jekyll sites. You may change this to
 # anything you like.
-# gem "minima", "~> 2.0"
+gem "minima", "~> 2.0"
 # gem 'jekyll-theme-cayman', '~> 0.1.1'
 # gem "jekyll-theme-primer", "~> 0.5.3"
 
