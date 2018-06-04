@@ -50,19 +50,19 @@ public class TestClass {
 }
 {% endhighlight %}
 
-An interesting thing is happening here. If we consider the expression 1 + 2 + a
-then the Java compiler simplifies it to 3 + a: this optimization is called
-constant folding and is a very common compiler optimization. However when we
-consider a + 1 + 2, the compiler does not simplify it. Why is that? If you know
-anything about ASTs you can probably guess easily enough. In any event, we will
-get a minimal example of a compiler plugin up and running that will let us poke
-around the AST and figure out why we have this discrepancy.
+An interesting thing is happening here. If we consider the expression `1 + 2 +
+a` then the Java compiler simplifies it to `3 + a`: this optimization is called
+*constant folding* and is a very common compiler optimization. However when we
+consider `a + 1 + 2`, the compiler does not simplify it. Why is that? If you
+know anything about ASTs you can probably guess easily enough. In any event, we
+will get a minimal example of a compiler plugin up and running that will let us
+poke around the AST and figure out why we have this discrepancy.
 
 ## Creating a Java Compiler Plugin
 
 Here's the skinny: we want to execute arbitrary code during compilation with
 full access to the compiler's innards by running something stupidly simple like
-javac --arg-to-run-plugin /class/to/compile. In this section we will get that
+`javac --use-plugin class/to/compile`. In this section we will get that
 set up.
 
 ### Project Structure
@@ -82,28 +82,30 @@ optimizing-plugin/
 ```
 
 * Our source code lives in `src/com/tangentiallyrelated/plugin`. 
-  * Note the file `src/META-INF/services`. The contents of this will be the
+  - Note the file `src/META-INF/services`. The contents of this will be the
     fully qualified name of your plugin---in my case, that is
     `com.tangentiallyrelated.plugin.OptimizingPlugin`
-  * `OptimizationPlugin.java`: this is our plugin (duh) and it is pretty simple
+  - `OptimizationPlugin.java`: this is our plugin (duh) and it is pretty simple
     (see below). All it does is register a task listener to be called back to
     when a compilation phase starts or ends.
-  * `OptimizationTaskListener.java`: The task listener waits for the compiler to
+  - `OptimizationTaskListener.java`: The task listener waits for the compiler to
     tell it that some sort of compilation event has happened (for example, if
-    parsing just finished) and is the entrypoint into our code.
-  * `ConstFoldTreeScanner.java`: If you know about compiler design then you know
-    that the first phase (lexing/parsing) creates an **abstract syntax tree** or
-    AST. A `TreeScanner` is used to traverse the AST and do what needs doin'. 
+    parsing just finished) and is the entrypoint into our code. Basically, just
+    the [Observer Pattern][observer pattern]
+  - `ConstFoldTreeScanner.java`: If you know about compiler design then you know
+    that the first phase (lexing/parsing) creates an *abstract syntax tree*
+    (AST). A `TreeScanner` is used to traverse the AST and do what needs doing.
     Ours will go through and fold any constants that need folding.
 
 
 ### Basic Implementation
-We will implement the [`com.sun.tools.util.Plugin`][javac-plugin-docs] interface which specifies two
-methods: `getName()` and `init(JavacTask task, String ... args)`. To get this we
-have to add a dependency to JDK's `tools.jar`, which in IntelliJ may be done in
-ProjectStructure. The sum total responsibility of this `Plugin` is to register a
-`TaskListener` with the compiler that will sit there and wait for the right part
-of the compilation to begin or end to do its job.
+We will implement the [`com.sun.tools.util.Plugin`][javac-plugin-docs] interface
+which specifies two methods: `getName()` and `init(JavacTask task, String ...
+args)`. To get this we have to add a dependency to JDK's `tools.jar`. The sum
+total responsibility of this plugin is to register a TaskListener with the
+compiler that will sit there and wait for the right part of the compilation to
+begin or end to do its job. In this section we will do just enough to test that
+we are getting compilation information from the compiler.
 
 {% highlight java%}
 
@@ -122,12 +124,14 @@ public class OptimizationPlugin implements Plugin {
 }
 {% endhighlight %}
 
-Two notes here. First, we are grabbing a `Context` instance and passing it to our
-`TaskListener`. We won't need this until later so just pretend it's not there
-for now.  Second, we haven't implemented the `OptimizationTaskListener` yet, so
-let's go ahead and do that. If you are unfamiliar with the [Observer
-Pattern][observer pattern], read up on it real quick (or don't: basically we
-just have a `TaskListener` waiting to be called when interesting stuff happens).
+A few notes: 
+* First, double check `getName()`---this has to return the same name as what you
+  specify via command line (more below).
+* Second, we are grabbing a `Context` instance and passing it to our
+  `TaskListener`. We won't need this until later so just pretend it's not there
+  for now.  
+* We haven't implemented the `OptimizationTaskListener` yet, so let's go ahead
+  and do that now.
 
 {% highlight java%}
 public class OptimizationTaskListener implements TaskListener {
@@ -152,9 +156,25 @@ public class OptimizationTaskListener implements TaskListener {
 Whenever a compilation phase is started the compiler will notify any registered
 task listener `t` via `t.started(event)`, where `event` describes which phase is
 starting up. Likewise, when a phase finishes `t.ended(event)` is called. At this
-point `t` has access to the compilation innards. In our example 
-we have interrupted the compiler just after the `PARSE` phase ended. This means
-we can make some last minute modifications to the AST:
+point `t` has access to the compilation innards via the `event` argument that is
+passed in. In our example we have interrupted the compiler just after the
+`PARSE` phase ended. This means we can make some last minute modifications to
+the AST. But first, let's ensure that this is working properly.
+
+
+### Building and Running
+
+Go ahead and build your project. From our root directory we can invoke the
+`javac` CLI with
+
+```
+javac -cp path/to/compiled/files -Xplugin:OptimizationPlugin resources/classes/TestClass.java
+```
+
+If you are using an IDE then your classpath will be something along the lines of
+`out/production/project-name` (this is where mine is); otherwise, if you are
+outputting class files where your source files are you can just set classpath as
+`src`.
 
 ### Working With ASTs
 We now have a basic plugin that can identify which compiler phase just started
@@ -265,7 +285,6 @@ visitMethodDef: rightConstantFold
 visitMethodDef: parenConstantFold
    visitBinary: a + (1 + 2)
    visitBinary: 1 + 2
-
 {% endhighlight %}
 
 Let's look at the bytecode generated again using `javap -c TestClass`:
@@ -281,7 +300,200 @@ Let's look at the bytecode generated again using `javap -c TestClass`:
 
 Our added parenthesis have induced a constant fold. Cool!
 
-### So
+### Implementing Right Constant Folding
+
+Consider the following expression:
+
+{% highlight java %}
+int yearsToSeconds(int years){
+  int seconds = years * 60 * 60 * 24 * 365;
+  return seconds;
+}
+{% endhighlight %}
+
+In fact, lets add this to our `TestClass.java` file since this will demonstrate
+another optimization that we will be performing later. We compile with our
+plugin which outputs
+
+```
+visitMethodDef: yearsToSeconds
+   visitBinary: years * 60 * 60 * 24 * 365
+   visitBinary: years * 60 * 60 * 24
+   visitBinary: years * 60 * 60
+   visitBinary: years * 60
+```
+
+Thus the innermost binary node in our expression is `(* years 60)`, and its
+parent is `(* (* years 60) 60)`, etc. This means we have an AST of the form
+
+{% highlight clojure %}
+  (* (* (* (* years 60) 60) 24) 
+     365)
+{% endhighlight %}
+
+The root node has the literal `356` for its right branch and its left branch has
+the literal `24` for *its* right branch. In particular, we have
+an expression tree of the form
+
+{% highlight clojure %}
+  (op (op SUBTREE LITERAL) LITERAL) 
+{% endhighlight %}
+
+and since we are working with a nice operator (multiplication) we can replace
+the above tree with
+
+{% highlight clojure %}
+  (op SUBTREE (op LITERAL LITERAL))
+{% endhighlight %}
+
+where `(op LITERAL LITERAL)` is evaluated and folded. 
+
+A word of warning: we have to be careful that we don't change the semantics of
+the program, which means that we need to respect *associativity* and
+*commutativity*: 
+
+* `(/ (/ 100 10) 2)` is not the same as `(/ 100 (/10 2))` because *division
+  isn't associative*;
+* `(* (+ a b) c)` is different from `(* a (+ b c))` *because `*` doesn't commute
+  with `+`*.
+
+Another way to think about this is that we are *rotating* our parse tree while
+preserving semantics. So if we have a tree
+```
+                  +
+                 / \
+                +   1
+               / \ 
+              +   2
+             / \ 
+            a   3
+```
+
+we want to produce the AST
+
+```
+              +
+             / \ 
+            a   +
+               / \ 
+              3   +
+                 / \ 
+                2   1
+```
+
+which can easily be replaced by the tree by recursively evaluating our
+right-leaning expression `(+ 3 (+ 2 1))`:
+
+```
+              +
+             / \ 
+            a   6
+```
+
+Alright, so we should create a class that updates a binary operator tree node if
+it can be folded. We will call this class `TreeFolder` because we are not very
+creative. There is a bit of work to be done here so I'll give the listing
+followed by an explanation of what everything does.
+
+{% highlight java %}
+public class TreeFolder {
+
+    /**
+     * For ease of use, lookup table for operators
+     */
+    private static HashMap<JCTree.Tag, BiFunction<JCTree.JCLiteral, JCTree.JCLiteral, JCTree.JCLiteral>> interpreters;
+
+    static {
+        interpreters = new HashMap<>();
+        interpreters.put(JCTree.Tag.PLUS,
+                (l, r) -> createIntLiteral(((Integer)l.getValue()) + ((Integer)r.getValue())));
+        interpreters.put(JCTree.Tag.MUL,
+                (l, r) -> createIntLiteral(((Integer)l.getValue()) * ((Integer)r.getValue())));
+    }
+
+    /**
+     * Create a new JCTree.JCLiteral with value {@code value}
+     * @param value
+     * @return
+     */
+    private static JCTree.JCLiteral createIntLiteral(int value){
+        try {
+            Constructor<JCTree.JCLiteral> constructor;
+            constructor = JCTree.JCLiteral.class.getDeclaredConstructor(TypeTag.class, Object.class);
+            constructor.setAccessible(true);
+            return constructor.newInstance(TypeTag.INT, value);
+        } catch (NoSuchMethodException
+                | InstantiationException
+                | IllegalAccessException
+                | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * Test if the operator is associative---here operators are specified with
+     * the {@code JCTree.Tag} type.
+     * @param tag
+     * @return
+     */
+    private static boolean tagIsAssociative(JCTree.Tag tag){
+        switch (tag){
+            case PLUS:
+            case MUL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Test if this is right foldable
+     * @param tree AST node to test
+     * @return {@code true} if we can bold this and {@code false} otherwise
+     */
+    private static boolean isRightFoldable(JCTree.JCBinary tree){
+        final JCTree.Tag tag = tree.getTag();
+        final JCTree.JCExpression lhs = tree.lhs;
+        final JCTree.JCExpression rhs = tree.rhs;
+        return tagIsAssociative(tag) && interpreters.containsKey(tag)
+                                     && rhs instanceof JCTree.JCLiteral
+                                     && lhs instanceof JCTree.JCBinary
+                                     && ((JCTree.JCLiteral)((JCTree.JCBinary)lhs).rhs).typetag == TypeTag.INT
+                                     && ((JCTree.JCLiteral) rhs).typetag == TypeTag.INT;
+    }
+
+    /**
+     * Perform a right constant fold if possible, otherwise do nothing
+     * @param tree
+     */
+    static void foldr(JCTree.JCBinary tree){
+
+        if (isRightFoldable(tree))
+        {
+            final JCTree.Tag tag = tree.getTag();
+            final JCTree.JCBinary lhs = (JCTree.JCBinary)tree.lhs;
+            final JCTree.JCLiteral rhs = (JCTree.JCLiteral)tree.rhs;
+            final BiFunction<JCTree.JCLiteral, JCTree.JCLiteral, JCTree.JCLiteral> fn = interpreters.get(tag);
+
+            if (lhs.getTag() == tag && lhs.rhs instanceof JCTree.JCLiteral){
+                final JCTree.JCLiteral lrLit = (JCTree.JCLiteral)lhs.rhs;
+                final JCTree.JCExpression llExpr = lhs.lhs;
+                final JCTree.JCLiteral newLiteral = fn.apply(lrLit, rhs);
+                if (newLiteral == null){
+                   return;
+                }
+                tree.lhs = llExpr;
+                tree.rhs = newLiteral;
+            }
+        }
+    }
+}
+{% endhighlight %}
+
+
+
 
 <!-- git-tag: basic-plugin-working -->
 

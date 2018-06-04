@@ -10,8 +10,11 @@ source "https://rubygems.org"
 # Happy Jekylling!
 gem "jekyll", "~> 3.8.2"
 
-# This is the default theme for new Jekyll sites. You may change this to anything you like.
+# This is the default theme for new Jekyll sites. You may change this to
+# anything you like.
 gem "minima", "~> 2.0"
+# gem 'jekyll-theme-cayman', '~> 0.1.1'
+# gem "jekyll-theme-primer", "~> 0.5.3"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
