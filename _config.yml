@@ -17,8 +17,8 @@ title: Tangentially Related
 email: bkushigian@cs.umass.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Where I write about what's distracting me from my work.
-baseurl: "/tangentiallyrelated" # the subpath of your site, e.g. /blog
-url: "http://bkushigian.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: bkushigian
 github_username:  bkushigian
 
