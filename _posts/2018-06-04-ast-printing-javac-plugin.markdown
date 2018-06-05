@@ -10,7 +10,7 @@ performed right constant foldings. I was planning on building a bytecode
 optimization TreeScanner next but I decided it would be nice to have something
 to visualize ASTs so that we don't have to fire up the debugger every time we
 want to see the structure of the code. The code is [on my github][repo-url]
-under the `print-scanner` release (or if you cloned last time, just do a pull).
+under the `ast-printer` release (or if you cloned last time, just do a pull).
 
 After my last post this one should be very easy---all that we will do is create
 a new TreeScanner that adds the node names and relevant information to a
@@ -315,8 +315,160 @@ Alright, I included quite a bit more than I intended to but not to worry---there
 are still some things for you to add int. It also might be nice to pretty-print
 some of the operators (`PLUS` could be replaced with `+` and so on).
 
+## Invoking your AST-Printer
+We now have two possible task that can run from our plugin. How should we run
+them? Obviously we should hard code and recompile whenever we want our program
+to have a new configuration. Oooh, or we could have it read a config file! Yeah,
+that's it!  Or, failing that, we should accept command line options.  Tomato
+tomato, really.
+
+But how do we add arguments to our plugin from the Javac CLI? How indeed...
+
+### Digging through the Javac source code
+
+The Javac compiler has an option for passing arguments into a plugin (you may
+have noticed that our plugin's `init` method had a variadic `String ... args`
+parameter). It actually took me digging through a bit of the Javac compiler to
+figure out exactly how to pass these in so I'll include the relevant bit here
+for some nice reading. Feel free to skip ahead.
+
+**From `com.sun.tools.javac.main.Main:452`:**
+
+{% highlight java %}
+if (plugins != null) {
+    JavacProcessingEnvironment pEnv = JavacProcessingEnvironment.instance(context);
+    ClassLoader cl = pEnv.getProcessorClassLoader();
+    ServiceLoader<Plugin> sl = ServiceLoader.load(Plugin.class, cl);
+    Set<List<String>> pluginsToCall = new LinkedHashSet<List<String>>();
+    for (String plugin: plugins.split("\\x00")) {
+        pluginsToCall.add(List.from(plugin.split("\\s+")));
+    }
+    JavacTask task = null;
+    Iterator<Plugin> iter = sl.iterator();
+    while (iter.hasNext()) {
+        Plugin plugin = iter.next();
+        for (List<String> p: pluginsToCall) {
+            if (plugin.getName().equals(p.head)) {
+                pluginsToCall.remove(p);
+                try {
+                    if (task == null)
+                        task = JavacTask.instance(pEnv);
+                    plugin.init(task, p.tail.toArray(new String[p.tail.size()]));
+                } catch (Throwable ex) {
+                    if (apiMode)
+                        throw new RuntimeException(ex);
+                    pluginMessage(ex);
+                    return Result.SYSERR;
+                }
+            }
+        }
+    }
+    for (List<String> p: pluginsToCall) {
+        log.printLines(PrefixKind.JAVAC, "msg.plugin.not.found", p.head);
+    }
+}
+{% endhighlight %}
+
+**Do you see it?** The 20th(ish) line, in the try-catch block, is
+
+    plugin.init(task, p.tail.toArray(new String[p.tail.size()]));
+
+And we see that the value `p.tail.toArray(new String[p.tail.size()])` gets
+passed to `init` in the `args` location. What is this value, you ask? Good
+question! It is the iterating variable in the for-each loop that we are in,
+which iterates over `pluginsToCall`. And what are the values that we are
+iterating over?  We see that we add `List<String>`s to `pluginsToCall` by
+calling
+
+    pluginsToCall.add(List.from(plugin.split("\\s+")));
+
+A little more investigation/debugger work tells us that `plugin` is actually the
+argument we passed in `-XPlugin:OptimizationPlugin` with the leading `-Xplugin:`
+stripped away. This means that Javac splits everything in our `-Xplugin:...`
+argument after the colon at whitespace and passes the tail of the new list to
+`init` as args.  We can separate arguments with whitespace and they are passed
+along to `init`. Thus we can call
+
+    javac "-Xplugin:OptimizationPlugin arg1 arg2 arg3" ...
+
+It's up to you how you want to pass args along. I'll include how I did it since
+it is simple enough.
+
+
+### Building a Basic Argument Parser
+
+For our friends who skipped the above bit, the TL;DR is that we can pass in
+arguments to our plugin like this:
+
+    javac "-Xplugin:OptimizationPlugin arg1 arg2 arg3" ...
+
+Now it is a case of setting up a basic arg parser and executing based on user
+input. This isn't particularly exciting so I'll just list the code and you can
+use it if you'd like
+
+{% highlight java %}
+
+public class OptimizationTaskListener implements TaskListener {
+    private TreeScanner visitor;
+
+    boolean printAST = false;
+    boolean foldConsts = true;
+    boolean printASTAfterFolds = false;
+
+    public OptimizationTaskListener(String ... args){
+        handleArgs(args);
+    }
+
+    private void handleArgs(String[] args) {
+        for (String arg : args){
+            if ("print-ast".equals(arg)){
+                printAST = true;
+            } else if ("no-folds".equals(args)){
+                foldConsts = false;
+            } else if("print-ast-after-folds".equals(arg)){
+                printASTAfterFolds = true;
+            } else if ("usage".equals(arg) || "help".equals(arg)){
+                System.out.println("OptimizationTaskListener Usage: \n" +
+                "  Invoke with either: \n" +
+                "      javac -Xplugin:OptimizationPlugin -cp classpath/with/plugin/compilation/base\n" +
+                "      javac \"-Xplugin:OptimizationPlugin with space separated args\" -cp classpath/with/plugin/compilation/base\n" +
+                "  Optional args include: \n" +
+                "      print-ast: Print the original AST\n" +
+                "      print-ast-after-folds: Print the AST after right folding--no effect if folding is disabled\n" +
+                "      no-folds: Disable folding optimization\n" +
+                "      usage | help: This message\n");
+                System.exit(0);
+            } else {
+                System.err.println("Unknown option " + arg + "... ignoring");
+            }
+        }
+    }
+
+    @Override
+    public void started(TaskEvent e) {}
+
+    @Override
+    public void finished(TaskEvent e) {
+        if (e.getKind() == TaskEvent.Kind.PARSE){
+            if (printAST) {
+                visitor = new ASTPrintTreeScanner();
+                visitor.scan((JCTree) e.getCompilationUnit());
+            }
+            if (foldConsts) {
+                visitor = new ConstFoldTreeScanner();
+                visitor.scan((JCTree)e.getCompilationUnit());
+                if (printASTAfterFolds){
+                    visitor = new ASTPrintTreeScanner();
+                    visitor.scan((JCTree) e.getCompilationUnit());
+                }
+            }
+        }
+    }
+}
+{% endhighlight %}
+
 Anyways, that's all there is to say about that. The code is on [my
-Github][repo-url] under release `print-scanner`.
+Github][repo-url] under release `ast-printer`.
 
 
 <!-- LINKS -->
