@@ -303,7 +303,7 @@ public class ASTPrintTreeScanner extends TreeScanner {
 
     @Override
     public void visitIf(JCTree.JCIf tree) {
-        printer.push("if: ");
+        printer.push("if ");
         super.visitIf(tree);
         printer.pop();
     }
