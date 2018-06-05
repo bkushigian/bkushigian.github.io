@@ -280,7 +280,7 @@ public class ASTPrintTreeScanner extends TreeScanner {
 
     @Override
     public void visitClassDef(JCTree.JCClassDecl tree) {
-        printer.push("class-def: " + tree.name);
+        printer.push("class-def " + tree.name);
         printer.newline();
         super.visitClassDef(tree);
         printer.pop();
@@ -312,7 +312,7 @@ public class ASTPrintTreeScanner extends TreeScanner {
 {% endhighlight %}
 
 Alright, I included quite a bit more than I intended to but not to worry---there
-are still some things for you to add int. It also might be nice to pretty-print
+are still some things for you to add in. It also might be nice to pretty-print
 some of the operators (`PLUS` could be replaced with `+` and so on).
 
 ## Invoking your AST-Printer
@@ -328,9 +328,9 @@ But how do we add arguments to our plugin from the Javac CLI? How indeed...
 
 The Javac compiler has an option for passing arguments into a plugin (you may
 have noticed that our plugin's `init` method had a variadic `String ... args`
-parameter). It actually took me digging through a bit of the Javac compiler to
+parameter). It actually took me digging through a bit of the Javac source to
 figure out exactly how to pass these in so I'll include the relevant bit here
-for some nice reading. Feel free to skip ahead.
+for some nice reading. Feel free to skip ahead to the next section.
 
 **From `com.sun.tools.javac.main.Main:452`:**
 
@@ -404,7 +404,7 @@ arguments to our plugin like this:
 
 Now it is a case of setting up a basic arg parser and executing based on user
 input. This isn't particularly exciting so I'll just list the code and you can
-use it if you'd like
+use it if you'd like.
 
 {% highlight java %}
 
