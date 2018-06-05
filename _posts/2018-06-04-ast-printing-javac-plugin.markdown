@@ -9,7 +9,8 @@ In my [last post][optimizing javac plugin] we got a Javac plugin set up that
 performed right constant foldings. I was planning on building a bytecode
 optimization TreeScanner next but I decided it would be nice to have something
 to visualize ASTs so that we don't have to fire up the debugger every time we
-want to see the structure of the code.
+want to see the structure of the code. The code is [on my github][repo-url]
+under the `print-scanner` release (or if you cloned last time, just do a pull).
 
 After my last post this one should be very easy---all that we will do is create
 a new TreeScanner that adds the node names and relevant information to a
@@ -55,15 +56,16 @@ As I was saying, this is a pretty easy plugin to write: we just need to override
 all the `visitXXX` methods in `TreeScanner` to
 1. Print the appropriate data of the node, i.e.,  
 
-      (method-def forTest {params [int a, int b], returns int, modifiers public }
+       (method-def forTest {params [int a, int b], returns int, modifiers public }
 
-2. Recur into any sub-trees as needed
+2. Recur into any sub-trees as needed (we do this with a call to
+   `super.visitXXX` which takes care of any recursion); and
 
 3. Print a closing parenthesis `)`
 
-
 Easy, no?
 
+## Wrapping StringBuilder---The ASTPrinter
 It will be useful to have a class that can handle the printing and indenting for
 us. To that end we define the `ASTPrinter` which prints all things AST-related.
 This is an easy enough class so I'll just list it and we can move on with our
@@ -151,6 +153,8 @@ class ASTPrinter {
 This is easy enough to customize if you see fit---the output isn't perfect but
 it's good enough for most use cases.
 
+
+## Building the TreeScanner
 Now we build the `TreeScanner`. I won't include everything but I'll include
 enough to get you going. All we will be doing is calling into `push` and `pop`
 with an occasional `newline` call. Anyways, here it is
