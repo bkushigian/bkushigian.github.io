@@ -6,7 +6,7 @@ comments: true
 categories: java compiler plugin
 ---
 
-The release of Java 1.8 brought us the Compiler Plugin.  This solves a long
+The release of Java 8 brought us the Compiler Plugin.  This solves a long
 standing problem that was previously dealt with via a rather ugly hack--using
 annotation processors. The Compiler Plugin allows us to get into the innards of
 the compiler and update the compilation process.
