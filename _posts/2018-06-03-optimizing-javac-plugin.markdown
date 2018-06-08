@@ -4,6 +4,7 @@ title:  "Building an Optimizing Javac Plugin"
 date:   2018-06-02 23:28:50 -0400
 comments: true
 categories: java compiler plugin
+group: javac-plugin
 ---
 
 The release of Java 8 brought us the Compiler Plugin.  This solves a long

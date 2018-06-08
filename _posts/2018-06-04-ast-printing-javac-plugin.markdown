@@ -4,6 +4,7 @@ title:  "Building an AST-Printer"
 date:   2018-06-03 23:28:50 -0400
 comments: true
 categories: java compiler javac-plugin
+group: javac-plugin
 ---
 
 In my [last post][optimizing javac plugin] we got a Javac plugin set up that
