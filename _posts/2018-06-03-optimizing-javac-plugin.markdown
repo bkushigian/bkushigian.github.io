@@ -3,7 +3,7 @@ layout: post
 title:  "Building an Optimizing Javac Plugin"
 date:   2018-06-02 23:28:50 -0400
 comments: true
-categories: java compiler plugin
+categories: java compiler javac-plugin
 group: javac-plugin
 ---
 
