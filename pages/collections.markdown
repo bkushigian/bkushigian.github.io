@@ -10,7 +10,7 @@ permalink: /javac-plugin-posts/
     <h2 class="post-list-heading">Javac Plugin</h2>
     <ul class="post-list">
       {%- for post in site.posts -%}
-        {%- if post.group == "javac-plugin" %}
+        {%- if post.categories contains "javac-plugin" %}
           <li>
             {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
             <span class="post-meta">{{ post.date | date: date_format }}</span>
@@ -23,13 +23,31 @@ permalink: /javac-plugin-posts/
               {{ post.excerpt }}
             {%- endif -%}
           </li>
-        {% else %}
-          {{ post.collection }}
         {%- endif %}
       {%- endfor -%}
     </ul>
 
+    <h2 class="post-list-heading">Miscellaneous</h2>
+    <ul class="post-list">
+      {%- for post in site.posts -%}
+        {%- if post.categories contains "misc" %}
+          <li>
+            {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+            <span class="post-meta">{{ post.date | date: date_format }}</span>
+            <h3>
+              <a class="post-link" href="{{ post.url | relative_url }}">
+                {{ post.title | escape }}
+              </a>
+            </h3>
+            {%- if site.show_excerpts -%}
+              {{ post.excerpt }}
+            {%- endif -%}
+          </li>
+        {%- endif %}
+      {%- endfor -%}
+    </ul>
     <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+
   {%- endif -%}
 
 </div>
