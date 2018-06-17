@@ -3,11 +3,11 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 title: Fun With Cats
+subtitle: An Introduction to Archery
 navbar: true
 permalink: /fun-with-cats/
 layout: fwc/home
 ---
-# An Introduction to Archery
 
 This is the homepage of the Fun With Cats reading group being offered in the
 UMass Amherst CS department. I'm running this group because I like playing with

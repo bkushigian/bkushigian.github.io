@@ -13,3 +13,5 @@ me accountable to continue learning the material.
 I also (not so) secretly harbor the opinion that there is too much productivity
 and practicality in computer science. I study computer science for the joy of
 the subject---that I can get filthy rich doing it is just a coincidence.
+
+*All images used without permission of the owner.*

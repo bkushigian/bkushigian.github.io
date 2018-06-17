@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: fwc/post
 title: "Fundamental Group"
 date:   2018-06-17 13:50:00 -0400
 future: false
