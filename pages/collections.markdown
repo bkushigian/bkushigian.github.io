@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Collections
+navbar: true
 permalink: /javac-plugin-posts/
 ---
 <div class="home">
