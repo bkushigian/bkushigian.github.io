@@ -1,3 +1,4 @@
+
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
@@ -23,6 +24,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  bkushigian
 disqus:
   shortname: bkushigian-github-io
+
 enable_disqus: true
 
 # Build settings

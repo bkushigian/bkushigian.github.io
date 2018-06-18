@@ -4,6 +4,7 @@ title:  "Fun With the Collatz Conjecture"
 date:   2018-06-10 15:00:00 -0400
 comments: true
 categories: collatz-conjecture misc
+identifier: "2018-06-collatz"
 group: misc
 ---
 

@@ -21,7 +21,7 @@ layout: fwc/default
     {{ content }}
   </div>
 
-  {%- if site.disqus.shortname -%}
+  {%- if site.disqus.shortname and site.enable_disqus -%}
     {%- include disqus_comments.html -%}
   {%- endif -%}
 
