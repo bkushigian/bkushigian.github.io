@@ -24,6 +24,7 @@ github_username:  bkushigian
 disqus:
   shortname: "bkushigian-github-io-1"
 enable_disqus: true
+permalink: /:year/:month/:day/:title:output_ext
 
 # Build settings
 markdown: kramdown
