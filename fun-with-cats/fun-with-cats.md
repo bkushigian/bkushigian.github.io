@@ -27,6 +27,8 @@ backgrounds the author develops the main examples from the ground up.
 Check out this [writeup](/fun-with-cats/materials/fwc-writeup.pdf) for more
 information.
 
+Also, thanks to Stephen Obinna, who I stole the name for this reading group from.
+
 [awodey-ct]: https://www.amazon.com/Category-Theory-Oxford-Logic-Guides/dp/0199237182
 [maclane-ctwm]: https://www.amazon.com/Categories-Working-Mathematician-Graduate-Mathematics/dp/0387984038/ref=sr_1_1?s=books&ie=UTF8&qid=1529253259&sr=1-1&keywords=Mac+Lane
 [riehl-ctic]: http://www.math.jhu.edu/~eriehl/context/
