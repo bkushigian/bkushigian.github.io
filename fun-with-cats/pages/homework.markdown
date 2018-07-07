@@ -21,5 +21,6 @@ problems. Still, sometimes these are difficult because they are almost too
 # [Homework 2 (6/7)](fwc-hw2.pdf)
 # [Homework 3 (6/24)](fwc-hw3.pdf)
 - [Solution](fwc-hw3-solutions.pdf)
+# [Homework 4 (7/6)](fwc-hw4.pdf)
 
 
