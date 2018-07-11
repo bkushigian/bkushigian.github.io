@@ -24,11 +24,15 @@ Context][riehl-ctic] by Emily Riehl. I chose Awodey's text because it has very
 humble prerequisites and while examples are given from a wide variety of
 backgrounds the author develops the main examples from the ground up.
 
+There is a [companion repo][companion-repo] that has the materials for the
+reading group.
+
 Check out this [writeup](/fun-with-cats/materials/fwc-writeup.pdf) for more
 information.
 
-Also, thanks to Stephen Obinna, who I stole the name for this reading group from.
+Also, thanks to Stephen Obinna, from whom I stole the name.
 
 [awodey-ct]: https://www.amazon.com/Category-Theory-Oxford-Logic-Guides/dp/0199237182
 [maclane-ctwm]: https://www.amazon.com/Categories-Working-Mathematician-Graduate-Mathematics/dp/0387984038/ref=sr_1_1?s=books&ie=UTF8&qid=1529253259&sr=1-1&keywords=Mac+Lane
 [riehl-ctic]: http://www.math.jhu.edu/~eriehl/context/
+[companion-repo]: https://github.com/bkushigian/fun-with-cats.git
