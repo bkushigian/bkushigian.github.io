@@ -4,7 +4,7 @@
 
 title: Fun With Cats
 subtitle: An Introduction to Archery
-navbar: true
+navbar: false
 permalink: /fun-with-cats/
 layout: fwc/home
 ---
