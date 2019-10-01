@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Publications
-navbar: true
+navbar: false
 permalink: /publications/
 ---
 <div class="home">
