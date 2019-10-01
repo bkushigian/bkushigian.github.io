@@ -7,8 +7,6 @@ layout: home
 navbar: true
 ---
 
-# Ben Kushigian
-
 <hr size="2" noshade color="gray">
 
 <div style="padding:1em; padding-bottom:0;">
