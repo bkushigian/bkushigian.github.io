@@ -5,7 +5,10 @@ navbar: true
 permalink: /about/
 ---
 
-I'm a grad student at UMass Amherst in the CS Department.  I spend most of my
-time coding and playing with math. I'm currently interested in formal
-verification, systems, and PL. I also enjoy working through math texts with
-friends. I am currently leading a reading group on Category Theory.
+I'm a first year PhD in University of Washington's CSE department working with
+[René Just][rjust-site]. I'm interested in software engineering, programming
+languages, and verification.  I'm currently researching the equivalent mutant
+problem and applying computer aided reasoning to prove mutant equivalence in JVM
+bytecode.
+
+[rjust-site]:https://people.cs.umass.edu/~rjust/
