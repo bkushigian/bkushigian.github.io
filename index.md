@@ -49,6 +49,5 @@ Computer Science from University Massachusetts, Amherst.
   <a href="/assets/files/medusa_icst_2019.pdf">PDF</a>
   </p>
 
-# Posts
 
 [rjust-site]:https://people.cs.umass.edu/~rjust/
