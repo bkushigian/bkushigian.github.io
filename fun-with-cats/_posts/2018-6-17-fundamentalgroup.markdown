@@ -6,6 +6,7 @@ future: false
 published: true
 categories: topology fun-with-cats
 group: writeup
+published: false
 ---
 
 Category theory has its roots in topology so I thought I'd give a writeup with
