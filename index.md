@@ -36,7 +36,7 @@ I'm currently researching the equivalent mutant problem and applying computer
 aided reasoning to prove mutant equivalence in JVM bytecode.
 
 # Bio
-I'm a first year PhD in University of Washington's CSE department working with
+I'm a second year PhD in University of Washington's CSE department working with
 [René Just][rjust-site]. I have a BS in Math and Computer Science, and a MS in
 Computer Science from University Massachusetts, Amherst.
 
@@ -48,5 +48,7 @@ Computer Science from University Massachusetts, Amherst.
   In Proceedings of the International Workshop on Mutation Analysis (Mutation), April 22 2019.<br/>
   <a href="/assets/files/medusa_icst_2019.pdf">PDF</a>
   </p>
+
+# Posts
 
 [rjust-site]:https://people.cs.umass.edu/~rjust/
