@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Heaps and EGraphs"
+title:  "Potential Challenges With Modeling Heaps in EGraphs"
 date:   2020-07-30 13:28:50 -0400
 comments: true
 categories: cornelius research
