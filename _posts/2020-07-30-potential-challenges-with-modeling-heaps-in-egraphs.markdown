@@ -6,7 +6,7 @@ comments: true
 categories: cornelius research
 group: cornelius
 ---
-<style>
+<style> <!--  -->
 td {
     font-size: 90%
 }
@@ -16,6 +16,11 @@ td code {
 }
 
 </style>
+
+<p style="color:red"><b>EDIT:</b> This post is concerned with unbounded heap
+sizes and access paths lengths in the presence of loops. The semantics of
+<i>theta</i> nodes don't actually construct these, though, so there is no
+problem. I'm holding on to this post for posterity (pardon the pun)...</p>
 
 ## Handling Heaps in EGraphs
 Cornelius is trying to handle arbitrary Java code, and this means dealing with
