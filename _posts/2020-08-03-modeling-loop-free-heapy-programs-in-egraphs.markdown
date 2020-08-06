@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Modeling Loop Free Heapy Programs in EGraphs"
-date:   2020-08-04 13:28:50 -0400
+date:   2020-08-05 23:00:50 -0400
 comments: true
 categories: cornelius research
 group: cornelius
