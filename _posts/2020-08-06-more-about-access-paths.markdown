@@ -2,7 +2,7 @@
 layout: post
 title:  "More About Access Paths"
 date:   2020-08-06 12:28:50 -0800
-published: false
+published: true
 comments: true
 categories: cornelius research
 tags: [cornelius, access paths, heaps, egraphs ]

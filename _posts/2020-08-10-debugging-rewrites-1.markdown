@@ -2,7 +2,7 @@
 layout: post
 title:  "Debugging Rewrites: 'attempt to add with overflow'"
 date:   2020-08-10 12:28:50 -0800
-published: false
+published: true
 comments: true
 categories: cornelius research
 tags: [cornelius, debugging rewrites]
