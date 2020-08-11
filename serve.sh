@@ -1,2 +1,2 @@
 #! /bin/sh
-bundle exec jekyll serve --drafts --future --config _local_config.yml
+bundle exec jekyll serve --unpublished --drafts --future --config _local_config.yml

@@ -60,6 +60,7 @@ argument; `rd` and `wr` nodes are related by the following rewrite rule:
 ```
 
 I'm running into a problem though. Consider the two programs, which are equivalent:
+<a name="listing-example1-double-deref"></a>
 ```java
 int double_deref_a() {
     return this.x.y;
