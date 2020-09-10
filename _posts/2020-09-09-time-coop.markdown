@@ -1,0 +1,428 @@
+---
+layout: post
+title:  "Time Co-op Writeup"
+date:   2020-09-09 12:00:00 -0800
+comments: true
+published: false
+categories: cornelius time-coop
+tags: cornelius
+group: cornelius
+---
+
+This week I want to introduce you to Cornelius. For those of you that don't
+know, Cornelius is a tool to detect equivalent and redundant mutants in Java
+programs. Cornelius translates the ASTs of a program and its mutants into
+Program Expression Graphs (PEGs), stuffs them into an Egraph, and runs a rewrite
+system until equality saturation is reached. Finally, Cornelius checks if any of
+the programs (the original program or the mutants) have become equivalent under
+the rewrites.
+
+For this Time Co-op I want to
+
+1. Introduce you to mutation analysis
+2. Introduce you to Cornelius
+3. Get your input on how Cornelius can find some equivalent and redundant mutants
+
+## Mutation Testing
+"How good is my test suite?" If you're anything like me, then probably not very
+good. Still, it would be nice to quantify just how not-good our test suites are.
+
+What should tests do? Catch bugs, of course! Finding real live bugs in code is
+hard, so we can't measure this property directly. However, we can seed a bunch
+of syntactic faults in our program, producing new slightly broken programs
+called _mutants_.
+
+After we have a bunch of mutants, we want to try to _kill_ the mutants by
+running the test suite on each mutant. If the mutant causes one of the tests in
+the suite to fail, the mutant is killed. We killed it. It ded.
+
+### Example
+
+Consider the following program which computes the max of two `int`s:
+
+```java
+int max(int a, int b){
+if (a > b) {
+    return a;
+}
+return b;
+}
+```
+
+Now, let's look at four mutants of this program.
+
+**Mutant 1:**
+```java
+int max(int a, int b){
+  if (a != b) {    // `>` -> `!=`
+    return a;
+  }
+  return b;
+}
+```
+
+**Mutant 2:**
+```java
+int max(int a, int b){
+  if (a >= b) {    // `>` -> `>=`
+    return a;
+  }
+  return b;
+}
+```
+
+**Mutant 3:**
+```java
+int max(int a, int b){
+  if (false) {    // `>` -> `false`
+    return a;
+  }
+  return b;
+}
+```
+
+**Mutant 4:**
+```java
+int max(int a, int b){
+  if (a > b) {
+       ;          // `return a;` -> `;`
+  }
+  return b;
+}
+```
+
+Let's say our test suite consists of a single test:
+```java
+public class ClarenceTheTestSuite {
+    @Test
+    public void theOnlyTestClarenceHas() {
+        assertEquals(max(1,2), 2);
+    }
+}
+```
+
+#### POP QUIZ
+1. Which of the above mutants does Clarence kill?
+2. What proportion (written as a decimal) of mutants does Clarence kill? This
+   number is called the **mutant kill ratio.**
+3. Can you write tests to kill the other mutants? If not, why not? If so, what's
+   your favorite color?
+4. **(mandatory bonus question)** Can you write tests to differentiate _all_
+   mutants? If not, why not? If so, what is your favorite smell?
+
+## Mutant Kill Ratio
+Problem 2 asks you to compute the mutant kill ratio. You should have gotten
+0.25: `ClarenceTheTestSuite` kills mutant 1 but not mutants 2-4. Thus it kills
+1/4 = 0.25 mutants. In general we want the mutant kill ratio to be close to 1;
+let's say that for the rest of the day, any mutation kill ratio of above 0.85 is
+"good".
+
+## Equivalent and Redundant Mutants
+Unless you broke reality you should have found it impossible to kill mutant 2.
+This is because it is _semantically equivalent_ to the original program, even
+though it differs syntactically. Such a mutant is called an **equivalent
+mutant**.
+
+Likewise, you should have found it impossible to write a test that behaves
+differently on mutants 3 and 4. These two mutants are semantically equivalent to
+one another. Such mutants are called **redundant mutants**.
+
+### Problems with Equivalent And Redundant Mutants
+Equivalent and redundant mutants cause two problems in mutation testing.
+
+1. _They skew metrics:_ The best a test suite can possibly do is to kill mutants
+   1, 3, and 4. This means that at best, the mutant kill ratio will be 0.75,
+   which is not 'good' according to our above definition.
+   
+   Similarly, a killing a redundant mutant kills all the mutants in its
+   redundancy class. This means that as long as a redundancy class is left
+   unkilled, it as has an overly negative effect on the mutant kill ratio, and
+   once it has been killed it has an overly positive effect on the mutant kill
+   ratio.
+
+2. _They waste resources:_ We have to run testing infrastructure on each mutant.
+   At scale this is expensive, and especially so with equivalent mutants. This
+   is because they can _never_ be detected, so we have to run the entire testing
+   infrastructure, wasting CPU cycles. What's worse, a human developer might
+   have to come in and waste human cycles trying to kill it by hand.
+
+### How to Handle This
+The only way to handle this is to detect generated equivalent and redundant
+mutants before running the test suite. This is undecidable in general, but there
+are a lot of mutants that are 'obviously' equivalent  or redundant.
+
+Cornelius uses Egraphs to detect equivalent and redundant mutants.
+
+## Detecting Equivalent Mutants with Egraphs
+Java is complicated, and I won't be doing anything with heaps or referency type
+things. Instead we will focus on loop free programs with primitive types.
+
+Cornelius starts by translating a program into a PEG. This currently involves
+_regularizing_ the AST so that there is a single return location. For instance,
+the original program becomes:
+
+```java
+int max(int a, int b) {
+    // Default value to satisfy Javac's flow checking. Definitely NOT a hack
+    int __RETURN_RESULT__ = -2147483648;
+    boolean __method_has_returned__ = false;
+    if (a > b) {
+        __method_has_returned__ = true;
+        __RETURN_RESULT__ = a;
+    }
+    /* --- Auto-generated guard statement --- */
+    if (!__method_has_returned__) {
+        __method_has_returned__ = true;
+        __RETURN_RESULT__ = b;
+    }
+    return __RETURN_RESULT__;
+}
+```
+
+And let's be honest, this is really an improvement, and is probably how the
+developer _should_ have written the code in the first place.
+
+It is future work to make this transformation _implicit_, saving both time and
+getting rid of pesky artifacts like the default initialization value in
+`__RETURN_RESULT__`. This shouldn't be too hard, but it might play funny with
+loops/etc so I haven't gotten around to it yet.
+
+Cornelius then translates the reguralized AST into a PEG. I'll represent PEGs as
+as S-expressions, but we should note that this is inaccurate: 
+PEGs use _deduplication_ or _node sharing_ to cut down on size and allow for
+very fast application of rewrite rules. I can't represent that as an
+S-expression so I'll just undeduplicate the PEG.
+
+```scheme
+(method-root
+  ;; Return value
+  (phi (! (phi (> (var a) (var b)) true false))
+       (var b) 
+       (phi (> (var a) (var b)) (var a) -2147483648))
+  ;; Resulting heap (pay no mind!)
+  (heap 0))
+```
+
+Since I like you I'm gonna rewrite this to a nicer form, omitting the heap part:
+
+```scheme
+(phi (! (> (var a) (var b)))
+     (var b)
+     (phi (> (var a) (var b))
+          (var a)
+          -2147483648))
+```
+
+Cornelius could get this with the rewrite rule
+
+```
+(phi ?c true false) => ?c
+```
+
+The `phi` nodes are if-then-else expressions, and the `var` nodes represent
+free variables (in this case, parameters passed in to the method) that don't
+have concrete values.
+
+The simplified pegs for the four mutants are:
+
+**Mutant 1:**
+```scheme
+(phi (! (!= (var a) (var b)))
+     (var b)
+     (phi (!= (var a) (var b))
+          (var a)
+          -2147483648))
+```
+
+**Mutant 2:**
+```scheme
+(phi (! (>= (var a) (var b)))
+     (var b)
+     (phi (>= (var a) (var b))
+          (var a)
+          -2147483648))
+```
+
+**Mutant 3:**
+```scheme
+(phi (! false) 
+     (var b)
+     (phi false
+          (var a)
+          -2147483648))
+```
+
+**Mutant 4:**
+```scheme
+(var b)
+```
+
+### POP QUIZ
+1. Can you find a set of rewrite rules that will discover the equivalence
+   between mutants 3 and 4? Generalize your results.
+2. Can you find a set of rewrite rules that will discover the equivalence
+   between the original program and mutant 2?
+3. If you solved problem 2, did your rewrite rules depend on the parent-child
+   relationship the two phi nodes? That is, did you use a rule like the
+   following, that has one phi node as a direct child of the other?
+
+   ```
+   (phi _ (phi _ _ _) _) => ...
+   ```
+
+   If not, how did you get around this? If so, is there a way to generalize this
+   from a parent/child relationship to an ancestor/descendant relationship?
+
+### Handling Local Equalities
+First, if you got this far, you're awesome! You get a _free mutant!!!!!_ If
+you've reached your hour (which you probably have), GET OUT OF HERE! YOU'RE
+DONE! GO WALK YOUR MUTANT!
+
+Alright, let's take a look at a contrived program and some of its mutants.
+
+```java
+    boolean areEqual(int a, int b) {
+        if (a == b) {
+            if (a == b) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+```
+
+There are 8 mutants generated for this subject, and when Cornelius runs on them
+it outputs the following discovered equivalence classes (each line contains a
+single equivalence class, and mutant id `0` corresponds to the original
+program):
+
+```
+0
+1
+2
+3 6 7
+4
+5
+```
+
+That means that Cornelius detected that mutants 3, 6, and 7 are redundant to one
+another, and no other equivalences were detected.
+
+This is ground truth:
+```
+3 6 7
+0 1 2 4 5 8
+```
+
+The good news is Cornelius hasn't reported any incorrect equivalences! SWEET!
+
+The bad news is that Cornelius missed a bunch of easy equivalences. Here are a
+couple of the equivalent mutants Cornelius missed:
+
+**Mutant 1:**
+```java
+    boolean areEqual(int a, int b) {
+        if (a <= b) {                // `==` -> `<=`
+            if (a == b) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+```
+
+**Mutant 5:**
+```java
+    boolean areEqual(int a, int b) {
+        if (a == b) {
+            if (a >= b) {            // `==` -> `>=`
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+```
+
+**Mutant 8:**
+```java
+    boolean areEqual(int a, int b) {
+        if (a == b) {
+            if (a == b) {
+                return true;
+            }
+                ;                    // `return false;` -> `;`
+        }
+        return false;
+    }
+```
+
+Let's take a closer look at mutant 8 as it compares to the original program. The
+original program has the following PEG (for readability I've applied a couple
+rewrite rules):
+
+**Original Program:**
+```scheme
+(phi (! (phi (== (var a) (var b))
+             (phi (! (== (var a) (var b)))
+                  true
+                  (== (var a) (var b)))
+             false))
+     false
+     (phi (== (var a) (var b)) 
+          (phi (! (== (var a) (var b)))
+               false
+               (== (var a) (var b)))
+          false))
+```
+
+**Mutant 8:**
+```scheme
+(phi (! (phi (== (var a) (var b)) 
+             (== (var a) (var b))
+             false))
+     false
+     (phi (== (var a) (var b)) 
+          (== (var a) (var b))
+          false))
+```
+
+These should be rewritable to one another. We can break these into sub problems:
+
+1. Can we find a way to rewrite
+   ```
+   (phi (== (var a) (var b))
+        (phi (! (== (var a) (var b)))
+             true
+             (== (var a) (var b)))
+        false)
+   ```
+   to
+   ```
+   (phi (== (var a) (var b)) 
+        (== (var a) (var b))
+        false)
+   ```
+   ?
+2. Can we find a way to rewrite
+   ```
+   (phi (== (var a) (var b))
+        (phi (! (== (var a) (var b)))
+             false
+             (== (var a) (var b)))
+        false)
+   ```
+   to
+   ```
+   (phi (== (var a) (var b)) 
+        (== (var a) (var b))
+        false)
+   ```
+   ?
+
+In the above questions, is there a way to do this purely with rewrite rules?
+Remember that we don't want any term to rewrite to multiple 'value' terms. So,
+for instance, rewriting `(== (var a) (var b))` to `true` will rewrite it
+_globally_.
