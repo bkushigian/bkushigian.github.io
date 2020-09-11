@@ -9,6 +9,10 @@ tags: cornelius
 group: cornelius
 ---
 
+* TOC
+{:toc}
+
+## Overview
 This week I want to introduce you to _Cornelius_, a static analysis tool to
 detect equivalent and redundant mutants in Java programs. Cornelius takes in the
 Java source files of a program and some mutants of that program, translates them
@@ -29,6 +33,7 @@ If you're interested in tinkering, check out the [Cornelius
 Repository](https://github.com/bkushigian/cornelius). It will require Java 8 to
 use the shell script wrapper. I haven't gotten around to writing a full tutorial
 but I'll try to get that together for next time.
+
 
 ## Mutation Testing
 Imagine you've just finished writing a test suite for one of your projects. How
