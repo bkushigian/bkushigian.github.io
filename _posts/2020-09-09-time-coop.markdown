@@ -9,32 +9,40 @@ tags: cornelius
 group: cornelius
 ---
 
-This week I want to introduce you to Cornelius. For those of you that don't
-know, Cornelius is a tool to detect equivalent and redundant mutants in Java
-programs. Cornelius translates the ASTs of a program and its mutants into
-Program Expression Graphs (PEGs), stuffs them into an Egraph, and runs a rewrite
-system until equality saturation is reached. Finally, Cornelius checks if any of
-the programs (the original program or the mutants) have become equivalent under
-the rewrites.
+This week I want to introduce you to _Cornelius_, a static analysis tool to
+detect equivalent and redundant mutants in Java programs. Cornelius takes in the
+Java source files of a program and some mutants of that program, translates them
+into Program Expression Graphs (PEGs), stuffs them into an Egraph, and runs a
+rewrite system until equality saturation is reached. Finally, Cornelius checks
+if any of the programs (the original program or the mutants) have become
+equivalent under the rewrites. Cornelius is heavily inspired by Tate et al's
+[Peggy](http://www.cs.cornell.edu/~ross/publications/eqsat/) tool. Under the
+hood, Cornelius uses [egg](https://github.com/mwillsey/egg).
 
 For this Time Co-op I want to
 
-1. Introduce you to mutation analysis
-2. Introduce you to Cornelius
-3. Get your input on how Cornelius can find some equivalent and redundant mutants
+1. Introduce _you_ to mutation analysis
+2. Introduce _you_ to Cornelius
+3. Get _your_ input on how Cornelius can find some equivalent and redundant mutants
+
+If you're interested in tinkering, check out the [Cornelius
+Repository](https://github.com/bkushigian/cornelius). It will require Java 8 to
+use the shell script wrapper. I haven't gotten around to writing a full tutorial
+but I'll try to get that together for next time.
 
 ## Mutation Testing
-"How good is my test suite?" If you're anything like me, then probably not very
-good. Still, it would be nice to quantify just how not-good our test suites are.
+Imagine you've just finished writing a test suite for one of your projects. How
+good is your test suite? If you're anything like me, then not very good. Still,
+it would be nice to quantify just how not-good our test suites are.
 
 What should tests do? Catch bugs, of course! Finding real live bugs in code is
 hard, so we can't measure this property directly. However, we can seed a bunch
-of syntactic faults in our program, producing new slightly broken programs
-called _mutants_.
+of syntactic faults in our program, producing new broken programs called
+_mutants_. Each of these mutants is a proxy for a real world bug.
 
-After we have a bunch of mutants, we want to try to _kill_ the mutants by
-running the test suite on each mutant. If the mutant causes one of the tests in
-the suite to fail, the mutant is killed. We killed it. It ded.
+After mutating the original program, we try to _kill_ mutants by running the
+test suite on each mutant. If a mutant causes one of the tests in the suite to
+fail, that mutant is _killed_. We killed it. It ded.
 
 ### Example
 
@@ -42,21 +50,18 @@ Consider the following program which computes the max of two `int`s:
 
 ```java
 int max(int a, int b){
-if (a > b) {
-    return a;
-}
-return b;
+  if (a > b) return a;
+  return b;
 }
 ```
 
-Now, let's look at four mutants of this program.
+Let's look at four of this program's mutants:
 
 **Mutant 1:**
 ```java
 int max(int a, int b){
-  if (a != b) {    // `>` -> `!=`
-    return a;
-  }
+  // `>` -> `!=`
+  if (a != b) return a;
   return b;
 }
 ```
@@ -64,9 +69,8 @@ int max(int a, int b){
 **Mutant 2:**
 ```java
 int max(int a, int b){
-  if (a >= b) {    // `>` -> `>=`
-    return a;
-  }
+  // `>` -> `>=`
+  if (a >= b) return a;
   return b;
 }
 ```
@@ -74,9 +78,8 @@ int max(int a, int b){
 **Mutant 3:**
 ```java
 int max(int a, int b){
-  if (false) {    // `>` -> `false`
-    return a;
-  }
+  // `>` -> `false`
+  if (false) return a;
   return b;
 }
 ```
@@ -84,14 +87,13 @@ int max(int a, int b){
 **Mutant 4:**
 ```java
 int max(int a, int b){
-  if (a > b) {
-       ;          // `return a;` -> `;`
-  }
+  // `return a;` -> `;`
+  if (a > b) ;
   return b;
 }
 ```
 
-Let's say our test suite consists of a single test:
+Let Clarence be a test suite with only a single test.
 ```java
 public class ClarenceTheTestSuite {
     @Test
@@ -101,14 +103,17 @@ public class ClarenceTheTestSuite {
 }
 ```
 
-#### POP QUIZ
+#### POP QUIZ 1
 1. Which of the above mutants does Clarence kill?
 2. What proportion (written as a decimal) of mutants does Clarence kill? This
    number is called the **mutant kill ratio.**
-3. Can you write tests to kill the other mutants? If not, why not? If so, what's
+3. Can _you_ write tests to kill the other mutants? If not, why not? If so, what's
    your favorite color?
-4. **(mandatory bonus question)** Can you write tests to differentiate _all_
-   mutants? If not, why not? If so, what is your favorite smell?
+4. **(mandatory bonus question)** Can _you_ write tests to differentiate _all_
+   mutants? That is, can you write a test suite such that for every pair of
+   mutants `m1` and `m2`, there is a test `t` that behaves differently on `m1`
+   and `m2`?
+   If not, why not? If so, what is your favorite smell?
 
 ## Mutant Kill Ratio
 Problem 2 asks you to compute the mutant kill ratio. You should have gotten
@@ -146,12 +151,40 @@ Equivalent and redundant mutants cause two problems in mutation testing.
    infrastructure, wasting CPU cycles. What's worse, a human developer might
    have to come in and waste human cycles trying to kill it by hand.
 
-### How to Handle This
-The only way to handle this is to detect generated equivalent and redundant
-mutants before running the test suite. This is undecidable in general, but there
-are a lot of mutants that are 'obviously' equivalent  or redundant.
+The equivalent mutant problem is one of the reasons why mutation testing isn't
+more widely adopted in practice.
 
-Cornelius uses Egraphs to detect equivalent and redundant mutants.
+### How We Handle the Equivalent And Redundant Mutant Problem
+The only way to handle equivalent and redundant mutants is to detect them
+before running the test suite. This is undecidable in general, but there are a
+lot of mutants that are 'obviously' equivalent or redundant.
+
+There have been a number of attempts to detect equivalent and redundant mutants.
+These attempts fall into two categories:
+
+1. **Use of constraints:** by modeling the semantics of two programs with
+   constraints, we can a query a constraint solver to determine if there are
+   inputs that force the programs to behave differently.
+   - [Constraint-based automatic test data generation (DeMilli and Offutt, 1991)](https://ieeexplore.ieee.org/document/92910/)
+   - [Using Constraints to Detect Equivalent Mutants (Offutt and Pan, 1994)](https://www.semanticscholar.org/paper/Using-Constraints-to-Detect-Equivalent-Mutants-Pan-Mason/329d2f8107679740395bac2cc0525f83adf33a20?p2df)
+   - [Automatically Detecting Equivalent Mutants and Infeasible Paths (Offutt and Pan, 1997)](https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-1689(199709)7:3%3C165::AID-STVR143%3E3.0.CO;2-U)
+   - [Using Constraints for Equivalent Mutant Detection (Nica and Wotawa, 2012)](https://arxiv.org/abs/1207.2234)
+   - [Medusa: Mutation Equivalence Detection Using SAT Analysis (Kushigian, Rawat, Just, 2019)](https://ieeexplore.ieee.org/document/8728921/)
+
+2. **Using compiler techniques:** compiler optimizations rewrite programs to
+   more efficient forms. These rewrites preserve program semantics. Therefore,
+   if two different programs are rewritten to the same optimized version they
+   must have begun as equivalent.
+
+   - [Detecting Trivial Mutant Equivalences via Compiler Optimisations (Kintis et al., 2018)](https://ieeexplore.ieee.org/ielx7/32/8338178/07882714.pdf?tp=&arnumber=7882714&isnumber=8338178&ref=aHR0cHM6Ly9pZWVleHBsb3JlLmllZWUub3JnL3N0YW1wL3N0YW1wLmpzcD9hcm51bWJlcj03ODgyNzE0)
+   - [Trivial Compiler Equivalence: A Large Scale Empirical Study of a Simple, Fast and Effective Equivalent Mutant Detection Technique (Papadakis et al., 2015)](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7194639&casa_token=SEBDFdKI7FkAAAAA:sdJSiNcUmwvStDWH1wS2UL1g1TnEtRhZBF6yXXmKOUjJ52iYEys-tl-C-mma9l8S7mzp4_Gjz9s&tag=1)
+   - [Using compiler optimization techniques to detect equivalent mutants (Offutt and Jefferson, 1994)](https://onlinelibrary.wiley.com/doi/abs/10.1002/stvr.4370040303)
+
+Cornelius uses a new approach: store all mutants in an Egraph and compute
+equality saturation.
+
+### How we _Actually_ Handle The Equivalent And Redundant Mutant Problem
+Use test coverage metrics.
 
 ## Detecting Equivalent Mutants with Egraphs
 Java is complicated, and I won't be doing anything with heaps or referency type
@@ -159,7 +192,7 @@ things. Instead we will focus on loop free programs with primitive types.
 
 Cornelius starts by translating a program into a PEG. This currently involves
 _regularizing_ the AST so that there is a single return location. For instance,
-the original program becomes:
+after regularization the original program becomes:
 
 ```java
 int max(int a, int b) {
@@ -182,16 +215,16 @@ int max(int a, int b) {
 And let's be honest, this is really an improvement, and is probably how the
 developer _should_ have written the code in the first place.
 
-It is future work to make this transformation _implicit_, saving both time and
+It is future work to make this transformation _implicit_, both saving time and
 getting rid of pesky artifacts like the default initialization value in
-`__RETURN_RESULT__`. This shouldn't be too hard, but it might play funny with
-loops/etc so I haven't gotten around to it yet.
+`__RETURN_RESULT__`. This shouldn't be too hard, but it will be subtle so I
+haven't gotten around to it yet.
 
 Cornelius then translates the reguralized AST into a PEG. I'll represent PEGs as
-as S-expressions, but we should note that this is inaccurate: 
-PEGs use _deduplication_ or _node sharing_ to cut down on size and allow for
-very fast application of rewrite rules. I can't represent that as an
-S-expression so I'll just undeduplicate the PEG.
+S-expressions, but this is inaccurate: PEGs use _deduplication_ or _node
+sharing_ to cut down on size and allow for very fast application of rewrite
+rules. I can't actually represent this as an S-expression so I'll just
+undeduplicate the PEG.
 
 ```scheme
 (method-root
@@ -203,7 +236,9 @@ S-expression so I'll just undeduplicate the PEG.
   (heap 0))
 ```
 
-Since I like you I'm gonna rewrite this to a nicer form, omitting the heap part:
+Since I like you I'm gonna rewrite this to a nicer form; I'll extract the
+return value, omitting the heapy bit, and I'll apply the rewrite rule `(phi ?c
+true false) => ?c` to make this more legible:
 
 ```scheme
 (phi (! (> (var a) (var b)))
@@ -213,17 +248,10 @@ Since I like you I'm gonna rewrite this to a nicer form, omitting the heap part:
           -2147483648))
 ```
 
-Cornelius could get this with the rewrite rule
-
-```
-(phi ?c true false) => ?c
-```
-
 The `phi` nodes are if-then-else expressions, and the `var` nodes represent
-free variables (in this case, parameters passed in to the method) that don't
-have concrete values.
+free variables (in this case, parameters passed in to the method).
 
-The simplified pegs for the four mutants are:
+The (simplified) pegs for the four mutants are:
 
 **Mutant 1:**
 ```scheme
@@ -258,22 +286,23 @@ The simplified pegs for the four mutants are:
 ```
 
 ### POP QUIZ
-1. Can you find a set of rewrite rules that will discover the equivalence
+1. Can _you_ find a set of rewrite rules that will discover the equivalence
    between mutants 3 and 4? Generalize your results.
-2. Can you find a set of rewrite rules that will discover the equivalence
-   between the original program and mutant 2?
-3. If you solved problem 2, did your rewrite rules depend on the parent-child
-   relationship the two phi nodes? That is, did you use a rule like the
-   following, that has one phi node as a direct child of the other?
 
-   ```
-   (phi _ (phi _ _ _) _) => ...
-   ```
+2. Can _you_ find a set of rewrite rules that will discover the equivalence
+   between the original program and mutant 2? (**Warning!** This is tricky!)
 
-   If not, how did you get around this? If so, is there a way to generalize this
-   from a parent/child relationship to an ancestor/descendant relationship?
+Solving the first problem is easier than solving the second. The following two
+rewrite rules will get us there:
+```scheme
+(! false) => true
+(phi true ?a ?b) => ?a
+```
+Handling the second problem, though, involves reasoning about _local
+equalities_.
 
 ### Handling Local Equalities
+
 First, if you got this far, you're awesome! You get a _free mutant!!!!!_ If
 you've reached your hour (which you probably have), GET OUT OF HERE! YOU'RE
 DONE! GO WALK YOUR MUTANT!
@@ -426,3 +455,129 @@ In the above questions, is there a way to do this purely with rewrite rules?
 Remember that we don't want any term to rewrite to multiple 'value' terms. So,
 for instance, rewriting `(== (var a) (var b))` to `true` will rewrite it
 _globally_.
+
+## Solutions to Pop Quizes
+### Pop Quiz 1
+1. Clarence kills mutant 1.
+2. Clarence has a mutant kill ratio of 0.25
+3. The following test kills mutants 3 and 4
+    ```java
+    @Test
+    public void aNewTestForClarence() {
+        assertEquals(max(2,1), 2);
+    }
+    ```
+    There are no tests can kill mutant 2 because it is equivalent.
+
+4. No, mutants 3 and 4 are in the same redundancy class.
+
+### Pop Quiz 2
+1. The rewrite rules
+   ```scheme
+   (! false) => true
+   (phi true ?a ?b) => ?a
+    ```
+2. Let's try to solve problem 2 from above. First, I'm gonna use a rule to
+   rewrite the above programs to get rid of that stupid default value:
+
+   ```scheme
+   rule1: (phi (! ?c) (phi ?c ?x ?y) ?z) => (phi (! ?c) ?y ?z)
+   ```
+   
+   This makes sense because if we're in the _then_ branch of a `phi` node we know
+   the condition is true.
+   
+   This gives us
+   
+   ```scheme
+   ;; Original
+   (phi (! (> (var a) (var b)))
+        (var b)
+        (var a))
+   
+   ;; Mutant 2
+   (phi (! (>= (var a) (var b)))
+        (var b)
+        (var a))
+   ```
+   
+   Next, let's distribute the negation over the comparison operators:
+   ```scheme
+   rule2: (! (>  ?a ?b)) => (<= ?a ?b)
+   rule3: (! (>= ?a ?b)) => (< ?a ?b)
+   ```
+   
+   This gives us
+   ```scheme
+   ;; Original
+   (phi (<= (var a) (var b))
+        (var b)
+        (var a))
+   
+   ;; Mutant 2
+   (phi (< (var a) (var b))
+        (var b)
+        (var a))
+   ```
+   
+   Now I want to split the `<=` into two cases: `<` and `==`:
+   
+   ```scheme
+   rule4: (<= ?a ?b) => (|| (< ?a ?b) (== ?a ?b))
+   ```
+   This produces
+   ```scheme
+   ;; Original
+   (phi (|| (< (var a) (var b)) (== (var a) (var b)))
+        (var b)
+        (var a))
+   
+   ;; Mutant 2
+   (phi (< (var a) (var b))
+        (var b)
+        (var a))
+   ```
+   
+   Okay, let's turn our `||` into nested `phi` nodes.
+   
+   ```
+   rule5: (phi (|| ?c1 ?c2) ?a ?b) => (phi ?c1 ?a (phi ?c2 ?a ?b))
+   ```
+   
+   This produces
+   
+   ```scheme
+   ;; Original
+   (phi (< (var a) (var b))
+        (var b)
+        (phi (== (var a) (var b))
+             (var b)
+             (var a)))
+   
+   ;; Mutant 2
+   (phi (< (var a) (var b))
+        (var b)
+        (var a))
+   ```
+   
+   Finally, if we can rewrite `(phi (== (var a) (var b)) (var b) (var a))` to `(var
+   a)`, we win. One way to do this would be to rewrite the `(var b)` in the then
+   branch of the `phi` node to `(var a)`, and use the rule
+   
+   ```scheme
+   rule6: (phi ?c ?a ?a) => ?a
+   ```
+   
+   **This is where I'm stuck.** I want to do _local rewrites_ , but all rewrites
+   are _global_ in an Egraph.
+   
+   I've tried to use a technique called [equality
+   refinement][equality-refinement] to make local rewrites, but this still
+   introduces soundness errors. Another idea is to use a second Egraph to do
+   local reasoning, and this seems like it could be promising, but would also
+   have a few downsides as well.
+
+[equality-refinement]: {% link _posts/2020-07-28-local-reasoning-with-equality-refinement.markdown %}
+
+
+ 
