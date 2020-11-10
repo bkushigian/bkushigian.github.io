@@ -3,7 +3,7 @@ layout: post
 title:  "Testing Cornelius Serialization with Clojure"
 date:   2020-11-06 12:00:00 -0800
 comments: true
-published: false
+published: true
 categories: cornelius
 tags: cornelius
 group: cornelius
