@@ -34,19 +34,35 @@ group: cornelius
 * TOC
 {:toc}
 
+## Testing Peg Serialization
+**Question:** how can I effectively test PEG serialization? Ultimately, each
+test is a set of input/expected output pairs. The input should be some Java code
+to be serialized, and the expected output should be some form that can easily be
+compared with the generated PEG. 
+
+I could compare PEGs directly, and this might be the right way to do it in the
+long run. However, I wanted something easy to implement and easy to write tests
+for.
+
 ## Original Testing Infrastructure
 I wrote a simple comment parser that can inspect method comments for forms like
-```html
-<expected>
-(heap-root (+ 1 2) (heap 0 unit))
-</expected>
+```java
+/**
+ * <expected>
+ *   (method-root (+ (var a) (var b)) (heap 0 unit))
+ * </expected>
+ */
+public int add(int a, int b) {
+    return a + b;
+}
 ```
 
-The test would read this, then serialize the method, and compare the string
-literals  for string equality, reporting the index of the first difference if
-one was found.
+The test would read the comment, serialize the method, and compare the parsed
+string literals with the dereferenced string of the serialized PEG for string
+equality, reporting the index of the first difference if one was found.
 
-This setup has several shortcomings:
+This was easy to implement, and for easy test cases was easy to write tests.
+However, this setup has several shortcomings:
  
 1. **Cannot test intermediate state:** The serializer only returns a
    `(method-root peg heap)` node, and this doesn't include intermediate state.
@@ -119,9 +135,14 @@ Note that I'm currently not testing the returned value from return statements
 explicitly (I made some early design decisions based on only having a single
 return statement in a method, and I'm going to update that soon---updating the
 testing infra doesn't make sense here, since it will only be around for a short
-amount of time).
+amount of time). Further, the way returns are handled is simply to record the
+resulting PEG (if any) in the returned expression, and copy heap info in a
+`(method-root PEG HEAP)` node. This is very simple and doesn't exercise any new
+machinery that isn't already exercised elsewhere in the method, so any bugs that
+show up should be immediately obvious. Anyway, this will be fixed at some point
+soon, but it isn't pressing.
 
-The above should be transformed into a program that runs tests, something like:
+The above `expected` decorations should be transformed into a program that runs tests, something like:
 
 ```clojure
 (t/testing "foo(int,int)"
@@ -158,12 +179,34 @@ The above should be transformed into a program that runs tests, something like:
                      ))))
 ```
 
-I'd like to fix one thing with this design: notice that I'm using the actual
-`String` values returned from `(to-deref-string ...)` for each of the serialized
-values. These will get really big, and for debugging I'd like to keep this as
-simple as possible. However these are generated from `PegNode`s, and I can't use
-object references inside of an `eval`. One way around this is to us a `bindings`
-wrapper, and auto-gen names for each object reference, which is something I can
-do in the future if it becomes an issue.
+## Problems with new implementation
+1. **Inlining `String` literals is space inefficient:**
+   I'm inlining the actual `String` literals returned from `to-deref-string` for
+   each of the serialized PEGs in the context and heap. These will get really
+   big. These are generated from `PegNode`s, and I can't use object references
+   inside of an `eval`. One way around this is to us a `bindings` wrapper, and
+   auto-gen names for each object reference, which is something I can do in the
+   future if it becomes an issue.
+
+2. **Testing via String Comparisons:**
+   If two PEGs differ, they will have different dereferenced strings.
+   These are hard to read as they can be HUGE. A better way to handle this would
+   be to write a PEG comparison method that recursively checks for PEG
+   equivalence. This also requires that I solve the binding problem that I
+   mention above (I can't reference PEGs directly in an `eval`).
+
+3. **Testing contexts is asymmetric:**
+   At test generation I have access to the actual contexts (they've already been
+   serialized) but I don't have access to the expected contexts...the testing
+   program I'm building is defining the expected contexts in a series of nested
+   let bindings, and these haven't been executed yet (they're still being
+   constructed). This means that when I check that contexts agree on a set of
+   keys, I'm only checking that they agree on the keys of the *serialized*
+   context. In particular, if the expected context has a bunch of garbage keys
+   that aren't part of the serialized context (or if the serialized context
+   doesn't include enough keys), these keys won't be tested.
+   
+   A fix is to write a function that takes a context and a list of keys and
+   asserts that the context has the same set of keys.
 
 
