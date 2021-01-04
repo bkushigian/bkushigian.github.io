@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Adding Method Invocations to Cornelius"
-date:   2020-08-24 12:00:00 -0800
+date:   2021-01-01 12:00:00 -0800
 comments: true
 published: false
 categories: random
@@ -59,4 +59,3 @@ discovering equivalences.
 ## Serialization
 
 [tate-et-al]: https://homes.cs.washington.edu/~ztatlock/pubs/eqsat-tate-lmcs11.pdf
-
