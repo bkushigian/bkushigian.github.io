@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Adding Exceptions to Cornelius, Part 1"
-date:   2020-09-02 12:00:00 -0800
+date:   2021-01-03 10:00:00 -0800
 comments: true
-published: false
+published: true
 categories: cornelius
 tags: [cornelius, exceptions]
 group: cornelius
