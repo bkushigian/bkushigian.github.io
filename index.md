@@ -32,8 +32,10 @@ navbar: false
 
 # About
 I'm interested in software engineering, programming languages, and verification.
-I'm currently researching the equivalent mutant problem and applying computer
-aided reasoning to prove mutant equivalence in JVM bytecode.
+I'm currently working on Cornelius, a tool to detect equivalent mutants using
+E-graphs.
+
+I'm also interested in music and sometimes lose money playing poker.
 
 # Bio
 I'm a second year PhD in University of Washington's CSE department working with
