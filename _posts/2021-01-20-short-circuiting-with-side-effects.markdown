@@ -3,7 +3,7 @@ layout: post
 title:  "Short Circuiting with Side Effects"
 date:   2021-01-20 12:00:00 -0800
 comments: true
-published: false
+published: true
 categories: cornelius
 tags: [cornelius, rewrites]
 group: cornelius

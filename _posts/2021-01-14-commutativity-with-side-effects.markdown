@@ -3,14 +3,16 @@ layout: post
 title:  "Commutativity with Side Effects"
 date:   2021-01-14 12:00:00 -0800
 comments: true
-published: false
+published: true
 categories: cornelius
 tags: [cornelius, rewrites]
 group: cornelius
 ---
 
 This post is just to clarify why I don't have to worry about side effects and
-commutative rewrites.
+commutative rewrites. In my next post, [Short Circuiting with Side Effects]({%
+post_url 2021-01-20-short-circuiting-with-side-effects %}), I look into why this
+fails and how to fix it.
 
 ## Commutativity
 Addition is commutative, obviously, so when I started working Cornelius a rule
