@@ -57,5 +57,5 @@ Instead this should serialize to something like this:
 ## Commutativity
 
 How does commutativity work here? It should actually just play out the same as
-in [my previous post]({% 2021-01-14-commutativity-with-side-effects %}).
+in [my previous post]({% post_url 2021-01-14-commutativity-with-side-effects %}).
 
