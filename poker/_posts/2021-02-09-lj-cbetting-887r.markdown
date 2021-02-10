@@ -1,0 +1,217 @@
+---
+layout: post
+title:  "Donking and CBetting | Lojack versus Big Blind | Flop: 887 Rainbow"
+date:   2021-02-09 13:28:50 -0400
+comments: true
+categories: poker, cbetting, donking
+group: poker
+---
+
+I came across an interesting scenario while working with PokerSnowie today.
+
+## Scenario
+6max, 100bb effective
+* **Preflop:** 
+  + LJ opens for 2.5bb
+  + Action folds to BB who calls
+* **Flop:** 
+  + Flop comes 8d8c7s (rainbow)
+
+![Board on the flop]( {{ "/poker/resources/img/887r-board.png" }} )
+
+I'm interested the following questions:
+
+1. does BB ever donk here?
+2. what does LJ continue with?
+  
+## Preflop Charts
+Here are the preflop charts from PS (these are approximate, and doesn't
+differentiate between some mixed 3betting in the BB):
+
+* **LJ: raise 15% of hands:** 66+, A2s+, K9s+, QTs+, JTs, ATo+, KJo+
+
+  ![LJ Open]( {{ "/poker/resources/img/6max-lj-open.png" }} )
+
+* **BB: call with 18% of hands:** 22-TT, A2s-A9s, K4s, K6s+, Q8s+, J8s+, T8s+,
+  97s+, 86s+, 75s+, 64s+, 53s+, ATo-AQo, KJo+, QJo 
+  
+  ![BB Call]( {{"/poker/resources/img/6max-bb-call-v-lj-open.png" }} )
+
+PokerCruncher gives LJ about 55.52 equity advantage.
+
+## Question 1: Does BB Donk?
+
+BB and LJ have about the same number of combos of the nuts in their range
+(actually, BB 3bets 88 every once and a while), and since BB's range is larger
+than LJ's range, 88 and 77 make up a larger proportion of LJ's range than BB's range.
+
+However, BB also has a 98s-A8s, for an extra 12x trips, and 87s,97s,K7s,and A7s,
+for an extra 12x second pair. While this doesn't give BB the equity advantage,
+it _does_ mean that BB is connecting with this flop in relatively nutty ways
+that LJ can't, and that means it might make sense to develop a donking range:
+
+**Hypothesis:** Given that BB has a nuts advantage, BB will donk bet on this
+flop with 88, 77, some 8x, as well as some bluffs.
+
+### What hands will BB donk with?
+#### My guess
+I think that BB will donk with 88, 87, 77, and maybe a couple other 8x and 7x
+hands. I also think that T9 and 65 might bet here. I'm not sure what bluffs BB
+would add.
+
+#### PokerSnowie
+PokerSnowie advocates that BB donk 1/2 pot about 7% of the time:
+
+![BB Donk]( {{"/poker/resources/img/887r-donk.png" }} )
+  
+There are some surprising things here:
+
+1. **88 is only bet 25% of the time**
+
+   Since we will mainly be checking this keeps our checking range strong,
+   allowing us to x/r.
+   
+2. **77 is almost never bet (about 7% of the time)**
+
+   Again, allows us to x/r effectively. I'm surprised we aren't betting out here
+   more though.
+
+3. **No 8x are bet.**
+
+   This is surprising because flopping trips here is pretty nutty. However,
+   given the ability to x/r, this actually makes sense.
+   
+   For instance, given Q8h, what turn cards are we afraid of? JTs gets there on
+   a 9, and even then we have around 14% equity. Obviously overpairs might make
+   a boat, but this also shouldn't be too likely. With no flush draws on the
+   board, we are pretty secure against any turn cards, and giving LJ a chance to
+   cbet is probably higher EV.
+   
+4. **A bunch of suited queens are bet: QJs, QTs, and Q9s w/ a BDFD are all bet
+   here 100%.**
+   
+   This surprised me, and is actually why I'm writing this. I want to figure out
+   what these QXs are doing in the donking range.
+   
+   
+   I also noticed that these hands are being cbet by LJ, so there is _something_
+   going on with these hands.
+   
+5. **BB's donk range has more bluffs than value bets.**
+
+There are about 8.5 combos of the Qx bluffs and only 3-4 combos of 'made hands'
+(including a 7 or an 8). PS is betting 1/2 pot here, so I guess by combining
+fold equity along with potential to improve and getting paid when we have the
+nuts, this might make sense? But it's really weird that we have more bluffs here
+than value bets.
+
+### Why donk with Qx?
+
+Here are the possible reasons I can think of:
+
+#### **Blockers**
+
+The Qx hands are all blocking over-pairs 99-QQ
+
+#### **Fold Equity** 
+
+These hands benefit from folds from hands like Ax and Qx, and maybe hands
+like 66. Hands like KTs-KQs don't benefit from fold equity as much because there
+are fewer overcards that beat us. QT getting KJ to fold is much better than vice
+versa.
+
+#### **Potential To Improve**
+First, all of these hands are BDFDs and can possibly make nut straights.
+
+### Revising Hypothesis
+I'm revising my hypothesis:
+
+_**Hypothesis 2.0:** On MMM paired flop (i.e., three medium cards from 6-9 with
+a pair) the BB has the nuts advantage and will donk bet on this flop with a small
+percentage of nutty made hands like 88, 77, and some weaker made hands, as well
+as around 1.5x-2x as many bluffs that (a) have good blocking potential, (b)
+benefit from folds, and (c) have a potential to improve._
+
+I can test this on other flops to see if the pattern continues.
+
+## Question 2: What does LJ continue with here?
+
+### My guess
+LJ has an equity advantage but not the nuts advantage. This is a relatively
+dynamic board: any 8x is clearly nutted and probably can bet to the river for
+value. However, a paired 7 is vulnerable. BB has some OESDs (65s, T9s) that
+probably won't fold, but we still have good equity against those.
+
+Because of the nuts advantage we don't want to bet too wide because of the risk
+of x/r. Therefore I think we will want to bet about half of our range about 1/2
+pot, including:
+
+* A8, 88
+* A7
+* 99+
+* Some bluffs:
+  + **Question:** what hands make the best bluffs?
+  + **Answer:** we kinda already answered this above (and I also already saw
+    this from PokerSnowie, so I cheated): the QTs+ hands w/ a BDFD make very
+    good bluffing candidates because they (a) benefit from folding out Kx and Ax
+    hands, (b) have potential to improve on later streets (straights, flushes,
+    pairing the turn/river), and (c) block some overpairs that BB might have.
+
+### PokerSnowie's answer
+PokerSnowie suggests cbetting 1/2 pot with only 23% of hands:
+
+![LJ Cbet]( {{"/poker/resources/img/887r-lj-cbet.png" }} )
+{% include label.html
+
+   title="Lojack's CBetting range" 
+
+   content="The lojack continues with any 7 or 8, as well as most Qx and Kx
+            holdings. Ax doesn't cbet, presumably because they aren't as
+            vulnerable to an A on the turn/river"
+            
+%}
+
+This is a polarized range. Overpairs and A-high don't bet, but nutted hands like
+88, 77, A8 and A7 continue.
+
+## Experiment design
+Unfortunately I don't have access to a solver, so all experiments will be by
+hand using PokerSnowie (i.e., I can't script PioSOLVER).
+
+To test my hypothesis I want to
+1. Try a number of paired MMM flops
+   * Does rainbow matter?
+   * Does adding a gap matter?
+   * Does making the unpaired higher than the paired cards matter?
+2. Try some MML paired flops
+   * Does changing the unpaired card to a low card matter?
+
+To test this, I am going to investigate two of each of the following flop
+textures:
+
+1. MMM paired/rainbow/no gaps (e.g., 887r)
+2. MMM paired/rainbow/1 gap (e.g., 886r)
+3. MMM paired/rainbow/unpaired>paired (e.g., 877r)
+4. MMM paired/two-tone (e.g., 8s8d7s)
+5. MML paired/rainbow (e.g., 883r)
+
+I will randomly generate the ranks (when there are more than two possible
+flops). The suits will be chosen by hand since they don't matter.
+
+```python
+import random
+l = [2,3,4,5]
+m = [6,7,8,9]
+h = [10,11,12,13]
+def make_paired_flop(ranks='mm', paired_is_higher=True, gap=False):
+    while True:
+        paired_card = random.choice(eval(ranks[0]))
+        unpaired_card = random.choice(eval(ranks[1]))
+        if paired_card == unpaired_card: continue
+        if paired_is_higher and paired_card < unpaired_card: continue
+        if gap ^ ((paired_card - unpaired_card) ** 2 == 1): 
+            return "{}{}{}".format(paired_card, paired_card, unpaired_card)
+```
+
+I explore these:
++ [MMM Rainbow/Paired/No Gap]( {% post_url 2021-02-09-mmm-paired-rainbow-nogap %} ).
