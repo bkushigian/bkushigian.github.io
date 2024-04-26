@@ -30,19 +30,20 @@ navbar: false
 
 <hr size="2" noshade color="gray">
 
-# About
-I'm interested in software engineering, programming languages, and verification.
-I'm currently working on Cornelius, a tool to detect equivalent mutants using
-E-graphs.
+## About
 
-I'm also interested in music and sometimes lose money playing poker.
+I'm interested in software engineering, and in testing/mutation analysis in
+particular. I'm currently trying to reimagine how we think about test utility
+and test goal generation.
+When I'm not mutating code I'm playing music or playing poker.
 
-# Bio
-I'm a second year PhD in University of Washington's CSE department working with
+## Bio
+
+I'm a fifth year PhD in University of Washington's CSE department working with
 [René Just][rjust-site]. I have a BS in Math and Computer Science, and a MS in
 Computer Science from University Massachusetts, Amherst.
 
-# Publications
+## Publications
 
   <p> <b>Medusa: Mutant Equivalent Detection using Satisfiability
   Analysis</b><br/>
