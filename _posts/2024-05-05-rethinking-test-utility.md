@@ -34,8 +34,8 @@ prevent regressions." And for day-to-day use cases this is fine.
 
 As systems scale, so do test suites, and determining when a test suite is
 _adequate_, or 'good enough', becomes infeasible. 
-To help determine when a test suite is adequate, developers use _adequacy
-metrics_ such as _coverage_ (statement, branch, condition, etc) or _mutation
+To help determine when a test suite is adequate, developers use adequacy
+metrics such as _coverage_ (statement, branch, condition, etc) or _mutation
 score_. Different adequacy metrics present different tradeoffs:
 coverage-adequate test suites is cheaper and easier to build than
 mutation-adequate test suites, but they also offer weaker theoretical
@@ -168,17 +168,61 @@ $$u_d(T)$$, then its _true_ utility should be something that increases over time
 I want to model test utility in a way that considers future test runs.
 One possible definition would be
 
-$$u_f(T) = \left(\left(u_d\left(T\right) - c_{run}\left(T\right)\right)^{r^N + 1}\right) - c_{write}(T)$$
+$$u_f(T) = {u_d\left(T\right)}^{\left(1 + r\right)^N}$$
+
 
 where:
 - $$u_d$$ is the fault detection rate of the test suite on the current software
+<!--
 - $$c_{run}$$ is the cost to run the test suite
 - $$c_{write}$$ is the cost to write the test suite
-- $$r > 1$$ is the regression detection factor, and encodes how effective the
-  test suite will detecting future regressions, and
+-->
+- $$0 \leq r \leq 1$$ is the regression detection factor, and encodes how
+  effective the test suite will detecting future regressions in each future
+  software version, and
 - $$N$$ is the number of future versions of software the suite will be run on.
 
+First, we want to show that this is a utility function according to our
+definition. I use the fact (left unproven) that $$u_d$$ is a utility function
+according to our definition.
+
+1. **The empty test suite has no utility:** 
+   Since $$u_d(\varnothing) = 0$$, we have 
+  
+   $$u_f(\varnothing) = {u_d(\varnothing)}^{1 + r} = 0^{1 + r} = 0$$
+
+   for all values of $$r$$.
+
+2. **Monotonic increasing:**
+   $$u_d$$ is monotonic increasing, $$x^{1 + r}$$ is monotonic increasing in
+   $$x$$ for $$1 + r > 0$$, and composition of monotonic increasing functions is
+   monotonic increasing, so $${u_d(T)}^{1 + r}$$ is monotonic increasing.
+
+3. **Submodularity:** $$u_d$$ is submodular
+
+   $$u_d(T_1 \cup T_2) + u_d(T_1 \cap T_2) \leq u_d(T_1) + u_d(T_2)$$
+
+   Let $$x = 1 + r \geq 1$$. By [Jan Vondrak's lecture
+   notes][vondrak-submodular-functions], we can prove submodularity by showing
+   that the marginal utility of adding test $$t$$ to a test suite has
+   diminishing marginal utility. Formally, we denote the marginal utility
+   adding test $$t$$ to suite $$T$$ as $$u^T(i) = u(T + i) - u(T)$$.
+   Thus we want to show that for test suites $$T_1 \subset T_2$$ and test $$t$$
+   not in either $$T_1$$ or $$T_2$$,
+
+   $$u_f^{T_1}(t) = u_d^{T_1}(t)^x \geq u_d^{T_2}(t)^x = u_f^{T_2}(t).$$
+
+   But this follows from submodularity of $$u_d$$ and $$x \geq 1$$:
+   since $$u_d^{T_1}(t) \geq u_d^{T_2}(t) \geq 0$$, and since $$x \geq 1$$,
+   we must have 
+   $$u_f^{T_1}(t) = u_d^{T_1}(t)^x \geq u_d^{T_2}(t)^x = u_f^{T_2}(t).$$
+
+Thus, we have proved that $$u_f$$ is a utility function.
+
+
+
 This model of utility is of course not perfect:
+
 - $$r$$ will not be constant for all software revisions; some versions of
   software will make very minor changes, while some may include large refactors
 - the number of future versions $$N$$ cannot be known
@@ -195,6 +239,8 @@ adequacy criterion will suffice (maybe coverage, maybe something weaker).
 
 If I have a piece of enterprise software then I will have a large $$N$$, and
 I'll want to employ stronger adequacy criteria.
+
+
 
 We can also simplify the formula to something like:
 
