@@ -16,6 +16,11 @@
     background-color: #fafafa;
 }
 
+.pub-title {
+    color: #36e;
+    font-weight: bold;
+}
+
 h1 {
   color: #3d3d3d;
 }

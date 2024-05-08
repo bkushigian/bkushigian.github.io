@@ -49,8 +49,18 @@ code I'm playing music or poker.
 
 ## pubs
 
-  <p> <b>Medusa: Mutant Equivalent Detection using Satisfiability
-  Analysis</b><br/>
+  <p><span class="pub-title">
+  fpga technology mapping using sketch-guided program synthesis
+  </span><br/>
+  by Gus Smith, Benjamin Kushigian, Vishal Canumalla, Andrew Cheung, Steven
+  Lyubomirsky, Sorawee Porncharoenwase, René Just, Gilbert Louis Bernstein,
+  Zachary Tatlock.<br/>
+  ASPLOS '24<br/>
+  <a href="https://dl.acm.org/doi/pdf/10.1145/3620665.3640387">PDF</a>
+  </p>
+  <p><span class="pub-title">
+  medusa: mutant equivalent detection using satisfiability analysis
+  </span><br/>
   by Benjamin Kushigian, Amit Rawat, and René Just.<br/>
   In Proceedings of the International Workshop on Mutation Analysis (Mutation), April 22 2019.<br/>
   <a href="/assets/files/medusa_icst_2019.pdf">PDF</a>
