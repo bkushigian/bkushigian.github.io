@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Software Testing as a Game
+title: software testing as a game
 date: 2024-04-23 01:00:00 -0400
 comments: true
 published: false
@@ -32,7 +32,7 @@ many others, but I haven't come across any work that does this. So I'm going to
 lay out some high level ideas. It won't be rigorous, but it should be in
 the right direction, and maybe I'll refine it later.
 
-## Testing is Collaborative
+## testing is collaborative
 
 Testing a piece of software should be a collaborative effort: the tester and
 the developer, often the same person, both want to make good software. Despite
@@ -53,7 +53,7 @@ implementation to prevent future regressions.
 I'll be considering [white-box testing][white-box-testing] for the rest of this
 post.
 
-## Modeling Costs
+## modeling costs
 
 To rigorously define a game we would want to model the cost of writing each test
 $$C_{T_W}$$, the cost of running each test $$C_{T_R}$$, and the cost of a fault
@@ -63,7 +63,7 @@ opinion lose a lot of its explanatory power.
 Instead, I'll find simpler cost models such as "the tester is only allowed one
 thousand tests for this function".
 
-## The Collaborative Game
+## the collaborative game
 
 This game is not adversarial at all: both the developer and the tester work
 together to build correct software.  In the collaborative game, a developer
@@ -84,7 +84,7 @@ developer saying "I already thought of that, and here is how I handle it".
 It is this adversariality between the tester and the developer that I want to
 probe further.
 
-## The Fault Finding Game
+## the fault finding game
 
 In the Fault Finding Game, we view the _developer as the {{ page.attacker }}_
 and the _tester as the {{ page.defender }}_.
@@ -117,7 +117,7 @@ Basically, I say that the {{ page.tester }} is performing
 Feel free to skip these and get
 [back to the Fault Finding Game](#back-to-the-fault-finding-game).
 
-### The Importance of White Box Testing
+### the importance of white box testing
 
 In these games it is crucial that the {{ page.tester }} have access to the
 implementation details (i.e., perform white-box testing).
@@ -143,7 +143,7 @@ they can inspect the implementation, realize that there is special logic when
 `x == 18446744073709551616`, and write a test case to ensure that
 `id(18446744073709551616)` is correct.
 
-### The Code Review Constraint: Constraining the Attacker
+### the code review constraint: constraining the attacker
 
 There are obvious constraints on the {{ page.tester }}: they cannot write too
 many tests (e.g., exhaustive testing) because of the cost of writing and running
@@ -186,7 +186,7 @@ the {{ page.developer }}, meaning that any implementation they submit to the
 
 <hr/>
 
-### Back to the Fault Finding Game
+### back to the fault finding game
 
 So how should the {{ page.tester }} allocate their testing resources? This is
 actually a very difficult problem, and its solution depends on a lot of
@@ -245,7 +245,7 @@ a
 If the {{ page.developer }} introduced all the right building blocks but uses
 them incorrectly then we can often look at those usages
 
-## The Regression Game
+## the regression game
 
 <!-- REFERENCES -->
 

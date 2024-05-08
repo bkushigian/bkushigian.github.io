@@ -1,0 +1,28 @@
+
+.fig {
+    border: 2px solid;
+    padding: 1em;
+    width: 75%;
+    margin: 2em;
+}
+
+.definition {
+    border: 2px solid;
+    border-color: #444488;
+    padding: 1em;
+    width: 85%;
+    margin: 1em;
+    color: #36e;
+    background-color: #fafafa;
+}
+
+h1 {
+  color: #3d3d3d;
+}
+
+h2 {
+  color: #454545;
+}
+h3 {
+  color: #555;
+}
