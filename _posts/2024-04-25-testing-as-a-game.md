@@ -3,7 +3,8 @@ layout: post
 title: Software Testing as a Game
 date: 2024-04-23 01:00:00 -0400
 comments: true
-published: true
+published: false
+draft: true
 categories: software_testing
 tags: research
 group: research
