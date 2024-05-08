@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Rethinking Test Utility
-date: 2024-05-05 01:00:00 -0400
+title: rethinking test utility
+date: 2024-05-08 11:00:00 -0800
 comments: true
 draft: true
 published: true
@@ -17,7 +17,40 @@ group: research
     width: 75%;
     margin: 2em;
 }
+
+.definition {
+    border: 2px solid;
+    border-color: #444488;
+    padding: 1em;
+    width: 85%;
+    margin: 1em;
+    color: #36e;
+    background-color: #fafafa;
+}
+
+h1 {
+  color: #3d3d3d;
+}
+
+h2 {
+  color: #454545;
+}
+h3 {
+  color: #555;
+}
 </style>
+
+<div class="fig" markdown="1">
+**TLDR:** We regularly need to estimate the utility of test suites. For
+instance, does the marginal utility of writing a new test outweigh the cost of
+writing and running it? Does mutation adequacy produce better/higher-utility
+test suites than coverage adequacy?  Traditionally we have used _fault
+detection_ to measure utility. I argue that bare fault-detection utility
+measures systematically underestimate true test utility, and this bias can lead
+to using methods that produce sub-optimal test suites.
+</div>
+
+## intro
 
 Most software engineers don't need to justify writing tests for their software:
 it's such an obviously good idea that they just do it.  Of course they can
@@ -53,39 +86,53 @@ There is no single answer to this question, since each project's requirements
 are unique.  However, researchers are tasked with quantifying these tradeoffs,
 and to do so we they need to estimate the _utility_ of different test suites.
 
-## Test utility
+## test utility
 
-Informally, the _test utility_ $$u(T)$$ of a test suite $$T$$ is the _benefit a
-developer gains by using suite $$T$$_. This will suffice for this post, but I'll
-also offer a first attempt at a formal definition (feel free to skip, this is more
-for my own reference than anyone else).
+<div class="definition" markdown="1">
+**Definition:**  Test Utility (informal)
 
-I'll say that a _test utility function_ is a real valued function $$u$$ on the
-space of test suites:
+The _test utility_ $$u(T)$$ of a test suite $$T$$ is the amount of benefit a
+developer gains by using suite $$T$$.
+</div>
 
-$$u: \text{Tests} \rightarrow \mathbb{R},$$
+This informal definition will suffice for this post, but I'll also offer a first
+attempt at a formal definition (feel free to skip, this is more for my own
+reference than anyone else).
+
+<div class="definition" markdown="1">
+**Definition:** Test Utility (formal)
+
+A _test utility function_ is a real valued function $$u$$ on the space
+of test suites:
+
+$$u: \text{Tests} \rightarrow \mathbb{R^{\geq 0}},$$
 
 that satisfies three axioms:
 
 1. **The empty test suite has no utility**: $$u(\varnothing) = 0$$
-2. **Test utility is monotonic increasing**: $$T_1 \subseteq T_2 \implies u(T_1) \leq u(T_2)$$
+
+2. **Test utility is monotonic increasing with respect to the subset relation**:
+   $$T_1 \subseteq T_2 \implies u(T_1) \leq u(T_2)$$
+
 3. **Diminishing marginal utility**: Formally we say that utility is a
   _submodular function:_ $$u(T_1 \cup T_2) + u(T_1 \cap T_2) \leq u(T_1) +
   u(T_2)$$. This is fairly technical, and this post can be understood without
   understanding the details of submodularity, but if you're interested check
   out [Jan Vondrak's lecture notes][vondrak-submodular-functions] or the
   [Wikipedia page on Submodular Set Functions][wiki-submodular-functions]
+</div>
 
 Again, this is probably not super important but I think it's good to have some
 formalism set up in case I want to roll up my sleeves and calculate later on.
 
-## Fault detection as test utility
+## fault detection as test utility
 
-The classic utility measure for test suites is fault detection. There are
-different ways of measuring fault detection. 
-The 'ideal' fault detection measure would be the percentage of faults present in
-a code base that are detected by a test suite, but this is infeasible as the
-number of faults present in a piece of software is unknown.
+The classic utility measure for test suites is fault detection. I'll denote it
+$$u_d(T)$$.
+There are different ways of measuring fault detection. The 'ideal' fault
+detection measure would be the percentage of faults present in a code base that
+are detected by a test suite, but this is infeasible as the number of faults
+present in a piece of software is unknown.
 Instead, researchers often try to estimate the _probability of detecting a
 fault_ or the _expected number of faults detected_.
 
@@ -95,7 +142,7 @@ It is also fairly easy to simulate running tests on faulty software under
 certain assumptions, and this was done quite a bit throughout the 1980s (e.g.,
 [Duran and Ntafos][duran-ntafos]).
 
-### Problems with fault detection test utility
+### problems with fault detection test utility
 
 Fault detection utility measures do not fully capture the utility of writing
 tests. To illustrate this, suppose we write a test, run it on our program, and
@@ -119,7 +166,7 @@ detection over random testing when the fault rate is low.  But their
 interpretation misses much of the long-term utility of testing.
 
 
-## So why do we test?
+## so why do we test?
 
 So why do we write tests? We write tests for many reasons:
 
@@ -163,7 +210,7 @@ _later_. This in turn implies a utility that is super-linear to fault detection.
 If an adequacy criterion produces a test suite with fault detection utility
 $$u_d(T)$$, then its _true_ utility should be something that increases over time.
 
-## Future Test Utility
+## future test utility
 
 I want to model test utility in a way that considers future test runs.
 One possible definition would be
@@ -173,13 +220,16 @@ $$u_f(T) = {u_d\left(T\right)}^{\left(1 + r\right)^N}$$
 
 where:
 - $$u_d$$ is the fault detection rate of the test suite on the current software
+
 <!--
 - $$c_{run}$$ is the cost to run the test suite
 - $$c_{write}$$ is the cost to write the test suite
 -->
+
 - $$0 \leq r \leq 1$$ is the regression detection factor, and encodes how
   effective the test suite will detecting future regressions in each future
   software version, and
+
 - $$N$$ is the number of future versions of software the suite will be run on.
 
 First, we want to show that this is a utility function according to our
