@@ -23,6 +23,7 @@ sizes and access paths lengths in the presence of loops. The semantics of
 problem. I'm holding on to this post for posterity (pardon the pun)...</p>
 
 ## Handling Heaps in EGraphs
+
 Cornelius is trying to handle arbitrary Java code, and this means dealing with
 the heap. Due to the nature of the heap (unbounded, dynamically allocated, etc),
 Cornelius won't be able to reason about it fully (...Cornelius works
