@@ -1,11 +1,10 @@
 ---
 layout: page
-title: Publications
+title: publications
 navbar: false
 permalink: /publications/
 ---
 <div class="home">
-
 
   <p> <b>Medusa: Mutant Equivalent Detection using Satisfiability
   Analysis</b><br/>

@@ -6,44 +6,48 @@ title: Ben Kushigian
 layout: home
 navbar: false
 ---
+<style>
+.heading-item {
+  /* text-align: center; */
+  font-size: 0.94em;
+}
+</style>
 
-<hr size="2" noshade color="gray">
-  <table width="100%" border="0px" cellpadding="5px" cellspacing="5px" pad="3px">
-  <td style="text-align: left" border="0px">
-    <h3> Research Assistant</h3>
-    <p>
-      <a href="https://www.cs.washington.edu/">Paul G. Allen School of Computer
-      Science & Engineering<br/></a>
-      <a href="http://www.washington.edu/">University of Washington</a>
-    </p>
+<!-- <hr size="0" noshade color="gray"> -->
+  <table width="100%" border="0px" cellpadding="0px" cellspacing="0px" pad="0px">
+  <td style="text-align: left" width="50%" border="0px" border-color="white">
+  <h3> Research Assistant</h3>
 
-    <p>
-    185 E Stevens Way NE<br/>
-    CSE2 252<br/>
-    benku@cs.washington.edu
-    </p>
+  <p class="heading-item">
+    <a href="https://www.cs.washington.edu/">Paul G. Allen School of Computer
+    Science & Engineering<br/></a></p>
+
+  <p class="heading-item">
+    <a href="http://www.washington.edu/">
+    University of Washington
+    </a></p>
+
+  <p class="heading-item">
+    <a href="mailto: benku@cs.washington.edu">benku@cs.washington.edu
+    </a>
+  </p>
   </td>
   <td  border="0px">
-    <img border="2px" src="/assets/img/me.jpg" height="190px">
+    <img border="2px" src="/assets/img/me.jpg" width="90%">
   </td>
   </table>
 
-<hr size="2" noshade color="gray">
+<!-- <hr size="2" noshade color="gray"> -->
 
-## About
-
-I'm interested in software engineering, and in testing/mutation analysis in
-particular. I'm currently trying to reimagine how we think about test utility
-and test goal generation.
-When I'm not mutating code I'm playing music or playing poker.
-
-## Bio
+## about
 
 I'm a fifth year PhD in University of Washington's CSE department working with
-[René Just][rjust-site]. I have a BS in Math and Computer Science, and a MS in
-Computer Science from University Massachusetts, Amherst.
+[René Just][rjust-site].  I'm interested in software engineering, and in
+testing/mutation analysis in particular. I'm currently trying to re-imagine how
+we think about test utility and test goal generation.  When I'm not mutating
+code I'm playing music or poker.
 
-## Publications
+## pubs
 
   <p> <b>Medusa: Mutant Equivalent Detection using Satisfiability
   Analysis</b><br/>
