@@ -16,7 +16,7 @@ navbar: false
 <!-- <hr size="0" noshade color="gray"> -->
   <table width="100%" border="0px" cellpadding="0px" cellspacing="0px" pad="0px">
   <td style="text-align: left" width="50%" border="0px" border-color="white">
-  <h3> Research Assistant</h3>
+  <h3>PhD Student</h3>
 
   <p class="heading-item">
     <a href="https://www.cs.washington.edu/">Paul G. Allen School of Computer

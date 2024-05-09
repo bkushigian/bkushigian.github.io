@@ -55,9 +55,17 @@ h3 {
   color: #555;
 }
 
+/* Override minima theme defaults */
 .post-link {
   font-size: 0.95em;
   display:inline;
+}
+
+/* Override minima theme defaults */
+.post-list {
+  > li {
+    margin-bottom: 0;
+  }
 }
 
 .post-meta {
