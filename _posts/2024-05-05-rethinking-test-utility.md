@@ -11,14 +11,21 @@ group: research
 ---
 
 <div class="tldr" markdown="1">
-**TLDR:** <i>We regularly need to estimate the utility of test suites. For
+<p><b>TLDR</b>: <i>We regularly need to estimate the utility of test suites. For
 instance, does the marginal utility of writing a new test outweigh the cost of
 writing and running it? Does mutation adequacy produce better/higher-utility
 test suites than coverage adequacy?  Traditionally we have used _fault
 detection_ to measure utility. I argue that bare fault-detection utility
 measures systematically underestimate true test utility, and this bias can lead
-to using methods that produce sub-optimal test suites.</i>
+to using methods that produce sub-optimal test suites.</i></p>
+
+<p markdown="1"><i markdown="1">
+I propose using the more general family of utility functions 
+$$u_d(T)^{(1+r)^N}$$, and suggest the simplified form $$u_d(T)^2$$.
+</i></p>
 </div>
+
+
 
 ## intro
 
@@ -145,7 +152,7 @@ interpretation misses much of the long-term utility of testing.
 
 ## so why do we test?
 
-So why do we write tests? We write tests for many reasons:
+We write tests for many reasons:
 
 1. _Detect faults in the present version of software:_ we've already discussed this.
 
@@ -198,18 +205,18 @@ $$u_f(T) = {u_d\left(T\right)}^{\left(1 + r\right)^N}$$
 where:
 - $$u_d$$ is the fault detection rate of the test suite on the current software
 
-<!--
-- $$c_{run}$$ is the cost to run the test suite
-- $$c_{write}$$ is the cost to write the test suite
--->
-
 - $$0 \leq r \leq 1$$ is the regression detection factor, and encodes how
   effective the test suite will detecting future regressions in each future
   software version, and
 
 - $$N$$ is the number of future versions of software the suite will be run on.
 
-First, we want to show that this is a utility function according to our
+<div class="fig" markdown="1">
+<p markdown="1"><b>Proof that $$u_f$$ is a test utility function</b></p>
+
+Again, feel free to skip the formalism.
+
+We want to show that this is a utility function according to our
 definition. I use the fact (left unproven) that $$u_d$$ is a utility function
 according to our definition.
 
@@ -245,6 +252,7 @@ according to our definition.
    $$u_f^{T_1}(t) = u_d^{T_1}(t)^x \geq u_d^{T_2}(t)^x = u_f^{T_2}(t).$$
 
 Thus, we have proved that $$u_f$$ is a utility function.
+</div>
 
 
 
@@ -253,11 +261,8 @@ This model of utility is of course not perfect:
 - $$r$$ will not be constant for all software revisions; some versions of
   software will make very minor changes, while some may include large refactors
 - the number of future versions $$N$$ cannot be known
-- it loses the simplicity of pure fault detection
-- it is non-trivial to estimate the cost of writing and running the test suite,
-  and this value may change over time.
 
-But the model also has some desirable features. It captures differences in use
+But the model also has some desirable features: It captures differences in use
 cases that, (e.g., personal projects versus enterprise software).
 For instance, if I'm testing a personal project then I probably won't have a
 million revisions of my software, so I can choose a relatively small $$N$$. This
@@ -267,15 +272,12 @@ adequacy criterion will suffice (maybe coverage, maybe something weaker).
 If I have a piece of enterprise software then I will have a large $$N$$, and
 I'll want to employ stronger adequacy criteria.
 
+## defining $$u_f$$ in practice
 
-
-We can also simplify the formula to something like:
-
-$$u_f(T) = {\left(u_d(T) - c_{run}(T)\right)}^2 - c_{write}(T)$$
-
-This at the very least begins to capture the future benefits of test writing,
-even if we are not precise about it.
-
+Finding the exact exponent to use is difficult, but we might be able to get away
+with something as simple as $$u_f = u_d^2$$. We can quibble over the precise
+value, but I think it is worth investigating how this utility function performs
+versus bare fault detection.
 
 <!-- REFERENCES -->
 
