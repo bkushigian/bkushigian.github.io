@@ -11,18 +11,35 @@ group: research
 ---
 
 <div class="tldr" markdown="1">
-<p><b>TLDR</b>: <i>We regularly need to estimate the utility of test suites. For
-instance, does the marginal utility of writing a new test outweigh the cost of
-writing and running it? Does mutation adequacy produce better/higher-utility
-test suites than coverage adequacy?  Traditionally we have used _fault
-detection_ to measure utility. I argue that bare fault-detection utility
-measures systematically underestimate true test utility, and this bias can lead
-to using methods that produce sub-optimal test suites.</i></p>
 
-<p markdown="1"><i markdown="1">
-I propose using the more general family of utility functions 
-$$u_d(T)^{(1+r)^N}$$, and suggest the simplified form $$u_d(T)^2$$.
-</i></p>
+<p markdown="1">
+  <b>TLDR</b>:
+  <i markdown="1">When we compare test adequacy metrics or test suite
+  generation techniques we often measure the utility of test suite $$T$$ with
+  fault detection $$u_d(T)$$ to determine which approach is better.
+  Fault detection does not account for future runs of the test suite (e.g., to
+  prevent regressions), and I believe that this results in a systematic
+  under-approximation of test suite utility.
+  </i>
+</p>
+
+<p>
+  <i markdown="1">In this post, I argue for a test utility metric that takes
+  future fault/regression detection into account. Further, I argue that
+  the utility of future executions of the test suite should be correlated with
+  the current fault detection, and thus we should see a super-linear
+  relationship between actual test utility and fault detection.
+   </i>
+</p>
+
+<p>
+  <i markdown="1">
+  I model future test utility $$u_f(T)$$ of a test suite $$T$$ as a function
+  $$u_d(T)^{f(N)}$$ that is super-linear to fault detection $$u_d$$, where $$N$$
+  is the number of times a test suite will be run in the future. Finally, I
+  propose a 'simple' instantiation of the model: $$u_f(T) = u_d(T)^{2}$$ where
+  we take the square of the fault detection.</i>
+</p>
 </div>
 
 
