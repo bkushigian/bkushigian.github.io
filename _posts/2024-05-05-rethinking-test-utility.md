@@ -10,44 +10,14 @@ tags: research
 group: research
 ---
 
-<style>
-.fig {
-    border: 2px solid;
-    padding: 1em;
-    width: 75%;
-    margin: 2em;
-}
-
-.definition {
-    border: 2px solid;
-    border-color: #444488;
-    padding: 1em;
-    width: 85%;
-    margin: 1em;
-    color: #36e;
-    background-color: #fafafa;
-}
-
-h1 {
-  color: #3d3d3d;
-}
-
-h2 {
-  color: #454545;
-}
-h3 {
-  color: #555;
-}
-</style>
-
-<div class="fig" markdown="1">
-**TLDR:** We regularly need to estimate the utility of test suites. For
+<div class="tldr" markdown="1">
+**TLDR:** <i>We regularly need to estimate the utility of test suites. For
 instance, does the marginal utility of writing a new test outweigh the cost of
 writing and running it? Does mutation adequacy produce better/higher-utility
 test suites than coverage adequacy?  Traditionally we have used _fault
 detection_ to measure utility. I argue that bare fault-detection utility
 measures systematically underestimate true test utility, and this bias can lead
-to using methods that produce sub-optimal test suites.
+to using methods that produce sub-optimal test suites.</i>
 </div>
 
 ## intro
@@ -75,8 +45,13 @@ mutation-adequate test suites, but they also offer weaker theoretical
 guarantees.
 
 <div markdown="1" class="fig"> ![Coverage versus Mutation](/assets/img/CoverageVsMutation.svg){: width="400" float="left" }
-<p><b>(Fig 1)</b> <em>Coverage versus Mutation Adequacy:</em> a visualization of the tradeoffs
-between coverage adequacy and mutation adequacy</p>
+
+<hr class="figdiv"/>
+
+<p><b>(Fig 1)</b>
+  <em>Coverage versus Mutation Adequacy:</em>
+  a visualization of the tradeoffs between coverage adequacy and mutation
+  adequacy</p>
 </div>
 
 So how should we determine adequacy? Should we use an adequacy metric like
@@ -87,6 +62,8 @@ are unique.  However, researchers are tasked with quantifying these tradeoffs,
 and to do so we they need to estimate the _utility_ of different test suites.
 
 ## test utility
+
+I'll start off with an informal definition of test utility.
 
 <div class="definition" markdown="1">
 **Definition:**  Test Utility (informal)

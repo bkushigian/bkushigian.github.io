@@ -6,6 +6,22 @@
     margin: 2em;
 }
 
+.figdiv {
+  width: "50%";
+  margin:auto;
+  color: #555;
+}
+
+.tldr {
+    border: 2px solid;
+    padding: 1em;
+    width: 85%;
+    margin: 2em;
+    background-color: #e7fff3;
+    color: rgb(39, 39, 39);
+    border-color: black;
+}
+
 .definition {
     border: 2px solid;
     border-color: #444488;
@@ -19,6 +35,7 @@
 .pub-title {
     color: #36e;
     font-weight: bold;
+    font-size: 1.1em;
 }
 
 h1 {
@@ -28,6 +45,21 @@ h1 {
 h2 {
   color: #454545;
 }
+
 h3 {
   color: #555;
+}
+
+.post-list-title {
+  font-size: 1.3em;
+  color: #555;
+}
+
+.post-link {
+  font-size: 0.95em;
+  display:inline;
+}
+
+.post-meta {
+  text-align: right;
 }

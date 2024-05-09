@@ -2,10 +2,22 @@
 layout: default
 ---
 {% include mathjax.html %}
+{%- if page.draft -%}
+  <style>
+    body {
+      background-color: rgb(229, 194, 194);
+    }
+  </style>
+{%- endif -%}
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
+  {%- if page.draft -%}
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }} 
+        <span style="color:rgb(86, 1, 1);"><i>(draft)</i></span></h1>
+  {%- else -%}
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+  {%- endif -%}
     <p class="post-meta">
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
