@@ -4,48 +4,72 @@ title: "poker diaries, volume 1: the beginining"
 date: 2024-06-28 11:00:00 -0800
 comments: true
 draft: true
-published: false
+published: true
 categories: poker
 tags: poker
 group: poker
 ---
 
-## what is this?
 
 Things fell through this summer. I thought I would be making good money at an
 internship, but due to a combination of bad luck and some unforced errors (I've
 never been good at dealing with bureaucracies), I found myself with an
-unexpected summer off.  I decided to make the most of it: this summer, for the
-first time in my life, I'll be making a living as a full-time professional poker
-player. In this series I'll be recording my struggles and experiences,
-explaining what I'm working on, and hopefully convincing family and friends that
-I'm not a degenerate gambler along the way.
+unexpected summer off. I was mad at first, maybe for twelve hours or so, but I
+quickly came around. I've been wanting to take a stab at being a professional poker player
+for a couple years now, and this was my opportunity. This summer, for the first
+time in my life, I'll be playing poker full time as more sole source of income.
 
-## a word on poker
+In this series I'll be recording my struggles and experiences, explaining what
+I'm working on, and maybe convincing family and friends that I'm not a
+degenerate gambler along the way.
+
+## my first week
+
+I am just wrapping up my first full week of playing professionally I'm playing
+smaller stakes to get my game back into shape ($25 and $50 buyins).  I'm only
+about 4,500 hands in, not much to be honest, but so far things feel good.  I'm
+thinking well, I'm reasoning well, and I'm able to read many of my opponents
+hands. Here is my first week's graph (along with some hands from last week).
+
+![first week's graph](/assets/img/poker_diaries/graph_week_1.png)
+
+The best games are late at night, so I've been experimenting with new sleep
+schedules so that I can be fresh for them. This means I'm going to bed between
+3am and 5am and sleeping until noon or 1. This makes certain things difficult,
+and at some point I'll switch to an earlier schedule, but for right now I think
+that this is the best way for me to make this work.
+
+I spent some of last week getting back into the groove of things, but was also
+studying quite a bit, writing software to help me analyze spots, and "running
+sims", a term I'll use a lot. Basically, there are programs that can compute a
+balanced poker strategy, called a _Nash equilibrium_. You can compute an
+equilibrium for a certain part of the game, and learn a strategy for that spot.
+This is called "running a sim" for that spot.
+
+Anyhoo, I've been running tens of thousands of sims and writing code to help me
+parse it all. More on that soon.
+
+## poker
 
 Poker is fundamentally a game of decision making in the presence of incomplete
-information, and with incomplete information comes variance. I will make the
-best decisions I can given the partial information I have, and sometimes I'll be
-horribly wrong, and sometimes I'll be horribly right. But if I'm good enough,
-I'll be right just a little more than I'm wrong, and over time I will win money.
+information. My goal is to make the best decisions I can given the information I
+have. Sometimes I'll be right, and sometimes I'll be horribly wrong.  But if I'm
+good enough, I'll be right just a little more than I'm wrong, and over time I
+will win money.
 
-Poker is gambling. However, for a skilled player it is _positive edge_ gambling,
-meaning that a good player should profit _in expectation_. In gambling parlance,
-we'd say that a skilled player _has an edge_.
+Poker is gambling. Technically. However, for a skilled player it is _positive
+edge_ gambling, meaning that a good player should _profit in expectation_. In
+gambling parlance, we'd say that a skilled player _has an edge_.
 
-Many (most?) folks do not know this: they often group poker with games like
+Many (most?) folks do not know this. They often group poker with games like
 blackjack, craps, slots, etc, games in which everyone loses in the long run and
-where there is no edge to be had (this is not quite true, you can gain an edge
-in blackjack by counting cards.
+where there is no edge to be had (this is not quite true, I think you can gain
+an edge in blackjack by counting cards, though to be honest I'm not sure...I've
+never been particularly interested in blackjack).
 
-There is also a societal morale judgement made about gambling, a common view that
-it is full of seedy people, schlubby old men in hoodies, probably reeking of cigarettes
-and maybe with a bit of an alcohol problem. And to be honest I kinda get it.
-There are definitely some degenerate players, or _degens_, that are not treating
-the game with the respect that it deserves. People that have poor impulse
-control are often drawn to alcohol and drug abuse, and often drawn to gambling.
-But not all players are degens. Some are recreational players, or _recs_, that
-like the game but haven't devoted the time to build a solid strategy. They play
+There are definitely some degenerate players, or _degens_, that play poker for
+the pure gamble.  There are also recreational players, or _recs_, that like the
+game but haven't devoted the time to build a solid strategy.  They often play
 within their means, and some of them are even very good. I myself, up until last
 week, considered myself a serious rec. Other players are highly skilled players
 who have practiced their craft for years. These are the pros. And as of last
@@ -53,11 +77,16 @@ week, this is how I view myself.
 
 ## what makes a poker pro?
 
-Pros treat poker like a job. They are a mix of grinders, amateur mathematicians,
-and scientific researchers. They spend much of their time simply playing poker,
-trying to make good decision after good decision. Online pros will play many
-tables of poker at once. They have their strategy refined down to a science,
-and most spots require little thought or effort; they are rote.
+Pros treat poker like a job. Their lives are a mix of clocking in to the poker
+table and studying strategies. Some players put in enormous volume while others
+play fewer hands but play with more intensity, eeking more edge out of each
+hand.  Some players play a simple strategy that works 'well enough' while others
+love to toy with ideas, come up with creative lines, and treat the craft more
+like an art.
+Regardless, pros spend much of their time simply playing poker, trying to make
+good decision after good decision. Online pros will play many tables of poker at
+once. They have their strategy refined down to a science, and most spots require
+little thought or effort; they are rote.
 
 But pros also spend a lot of time studying, trying to get new insights about the
 game to get an edge against their competition. This involves working with
@@ -75,63 +104,24 @@ simplifying the game to much.
 ## variance
 
 Variance will be a big part of this series: in some sense, a professional poker
-player is exchanging variance for expected profit. Recreational players get
-enjoyment from the thrill of gambling, and pros sell recreational players this
-thrill in exchange for an expected profit, or what we like to call an _edge_.
-A pro might lose a lot of money to a recreational player over the course of any
-given session, and the chance this can happen is essentially what the pro is
-selling.  However, in the long run, the recreational is going to lose money, and
-lots of it.
+player is taking on variance in exchange for expected profit. Recreational
+players get enjoyment from the thrill of gambling, and pros sell recreational
+players this thrill in exchange for an expected profit, or what we like to call
+an _edge_.  A pro might lose a lot of money to a recreational player over the
+course of any given session, and the chance this can happen is essentially what
+the pro is selling.  However, in the long run, the recreational is going to lose
+money, and lots of it.
 
 Every decision we make in life is subject to variance. Which school we go to,
-where we work, who we date, etc. Does your kid keep you up all night or does she
-sleep soundly through the night? Variance.
+where we work, who we date, etc.
 
-As an example, my partner and I, who already knew each other through a mutual
-friend, saw each other on the train one day. We'd never really gotten on before,
-but she saw me and texted me to come sit down next to her. I did, and we ended
-up having a great conversation. I left the train with a burgeoning crush, and a
-couple months later we went on our first date.
+Variance is costly. If I don't the outcome of an event, I can't plan
+accordingly. Variance also muddies feedback. Did I lose money this month at the
+tables because I was playing bad, or because of variance?
 
-## what goes into being a pro?
+Being able to manage big swings, the result of variance, is fundamental to
+poker. The mental game of poker is a big side of it, and maybe not the strongest
+aspect of my game. It's something I'll be keeping an eye on.
 
-First, a lot of study and hard work. Poker is a complex game, filled with
-nuances. A pro needs to learn theory so they can understand the fundamental
-mechanics of different spots and how to navigate uncertainty with the minimum
-risk and the most upside. A pro also needs to learn about their biases. Humans
-are not good at reasoning about risk. Some of us are risk averse. Some of us are
-comfortable taking risks. None of us are perfectly balanced. And our biases
-change depending on the situation.
-
-For instance, I just quit a session because I was tired and making poor
-decisions.  I was getting irritable at people playing poorly, even though that's
-who I make my money off of (this is all online so we weren't communicating, I
-was just alone in my room grumbling to myself).  I folded some hands that had
-enough equity to continue because I was feeling risk averse and didn't want to
-make tough decisions later.
-
-In short, I was playing at about 70%, and I'm just not good enough yet to be
-able to play profitably when I'm at that level.
-
-<!-- Graveyard -->
-
-We can make all the right choices and still lose.  We can do everything wrong
-and win. We all know that life isn't "fair". That is because of variance.
-
-Anyway, back to my unemployment: I suddenly had a summer off and I needed to
-make money. I've ground my way up to being a profitable, though inconsistent,
-poker player. I haven't always had a ton of time to invest into playing, but
-when I do I've found myself getting better and better. I have a relatively
-strong theoretical background, but I also have strong intuition, and I like
-to combine these things to solve problems in real time. This is essentially what
-the day-to-day life of a poker player is all about: solving problems.
-
-So I decided to invest some of my savings into an online poker site and start
-playing full time.
-
-I started off slow. Lower stakes ($25 buyins), maybe a few hundred hands a day.
-I will play up to 4 tables, but at first I'd only play one or two, and really
-focus on my decisions. I did that for a couple weeks, slowly getting back into
-the game, and I now feel like I'm just about ready to start playing full time
-again.
-
+Anyway, I'll be talking more about variance throughout as it is one of the most
+crucial aspects of playing poker.
