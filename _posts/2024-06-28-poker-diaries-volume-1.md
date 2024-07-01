@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "poker diaries, volume 1: the beginining"
-date: 2024-07-01 1:00:00 -0800
+date: 2024-07-01 0:00:00 -0800
 comments: true
 draft: false
 published: true
@@ -11,7 +11,9 @@ group: poker
 ---
 
 
+<div markdown="1" style="margin:1em; margin-top:2em;">
 ![Cumulative Graph](/assets/img/poker_diaries/graph_w2_cumulative.png)
+</div>
 
 Things fell through this summer. I thought I would be making good money at an
 internship, but due to a combination of bad luck and some unforced errors (I've
