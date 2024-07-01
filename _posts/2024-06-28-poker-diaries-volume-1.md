@@ -10,6 +10,7 @@ tags: poker
 group: poker
 ---
 
+
 ![Cumulative Graph](/assets/img/poker_diaries/graph_w2_cumulative.png)
 
 Things fell through this summer. I thought I would be making good money at an
@@ -26,17 +27,17 @@ source of income, and I'm cataloging my experiences and struggles.  I'll
 explaining what I'm working on, delving into topics ranging from lifestyle to
 in-depth strategy to writing software to analyze poker sims.
 
-# my first weeks 
+## my first weeks
 
 Today marks the end of my second week of playing professionally. I'm still
 playing smaller stakes to get my game back into shape ($25 and $50 buyins).  I'm
-only about 5300 hands in, not much in online poker terms, but so far things feel
+only about 5,700 hands in, not much in online poker terms, but so far things feel
 good. I'm thinking well, reasoning through spots, and I'm able to read many of
 my opponents hands.
 
 I'm slowly getting my volume up, but it's slow going. My first milestone will be
-5k hands per week. The first week I got in 2.2k hands, and this week I got up to
-3k hands. This week I could have gotten more hands but I had sleep trouble
+5k hands per week. The first week I got in 2.2k hands, and this week I got to
+3.5k hands. This week I could have gotten more hands but I had sleep trouble
 earlier in the week which led to lower volume.
 
 I ran pretty hot in my first week. A lot of the volume was at 25nl (that is, $25
@@ -67,7 +68,6 @@ hours of grinding to make ends meet. One way around this is to move up stakes,
 and I'll be doing that soon once I feel better about my game and have studied a
 bit more.
 
-
 My second week was a bit tougher.
 
 <div markdown="1" style="margin:1em; margin-top:2em;">
@@ -87,18 +87,15 @@ up runner-runnering a 5 high flush vs my aces. Just a freak hand, nothing to be
 done, but it really added insult to injury.
 
 After about an hour I was down $150 and I sat out. It was a tough way to start
-the week, and tougher still I was having major sleep issues come Thursday when
-it was time for me to play again. I played a few hands, but didn't get anywhere
-near my 1k target. Friday and Saturday I had some more hands and ran quite a bit
-better until I cooled off today (Sunday). I think I won like $20 today, but it
-was just one kind of annoying hand after another, and I sat out a bit ago after
-playing about 600 hands.  I was tired and having trouble focusing, so I figured
-I'd call it an evening.
+the week, and tougher still I was having sleep issues, making me miss most of my
+volume on Thursday.
+Friday and Saturday I had some more hands and ran quite a bit
+better until I cooled off today (Sunday). I played 1.1k hands and it was pretty
+break-even until the last little bit when I finally won some hands and ended up
+$110.
 
-Still, overall I feel like I played well this week and $200 is still nothing to
-sneeze at. I started out down 6 buyins and came back to book a win this week,
-winning at just under 8bb/100 (nothing to sneeze at).
-
+Overall I feel like I played well this week: I started out down 6 buyins and
+came back to end up 6 buyins, winning at just over 12bb/100.
 
 <hr style="margin:2em;">
 
@@ -156,7 +153,7 @@ strategies we can capture much of the value of an equilibrium strategy.
 I'll be writing more about this custom software soon.
 
 
-# poker
+## poker
 
 Poker is fundamentally a game of decision making in the presence of incomplete
 information. My goal is to make the best decisions I can given the information I
@@ -177,7 +174,7 @@ grouped more with stock trading. You _can_ make money at it, and in fact many
 pros are making six figures ($200k/year is not unheard of).
 
 
-# what makes a poker pro?
+## what makes a poker pro?
 
 Pros treat poker like a job. Their lives are a mix of clocking in to the poker
 table and studying strategies. Some players put in enormous volume while others
@@ -203,7 +200,7 @@ The game is so complicated that nobody can play it perfectly. This means that
 people are always trying to find ways to play as accurately as possible without
 simplifying the game to much.
 
-# variance
+## variance
 
 Variance will be a big part of this series: in some sense, a professional poker
 player is taking on variance in exchange for expected profit. Recreational
