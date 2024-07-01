@@ -3,7 +3,7 @@ layout: post
 title: "poker diaries, volume 1: the beginining"
 date: 2024-06-28 11:00:00 -0800
 comments: true
-draft: true
+draft: false
 published: true
 categories: poker
 tags: poker
