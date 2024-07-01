@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "poker diaries, volume 1: the beginining"
-date: 2024-06-28 11:00:00 -0800
+date: 2024-07-01 1:00:00 -0800
 comments: true
 draft: false
 published: true
