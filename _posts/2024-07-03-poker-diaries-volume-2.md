@@ -53,3 +53,5 @@ balance.  The exact details are complicated, and it's not clear how I should
 answer them. It of course depends on my opponent. If they bluff too much I
 should trap more. If they never bluff I should play my hands 'naturally' (bet
 strong and weak, and check medium).
+
+Enter the equilibrium. The game theorist John Nash discovered that every 
