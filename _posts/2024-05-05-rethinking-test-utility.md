@@ -203,8 +203,8 @@ We write tests for many reasons:
    Thus, the test cases written in (3) help to pass on expert knowledge derived
    in step (2) to future developers.
 
-These points are all well and good, but it is not possible to encode these in a
-formal utility measure that is feasible to execute. However, we _can_ conclude
+These points are all well and good, but I don't know how to encode them as a
+formal utility function that is easy to execute and easy to reason about. However, we _can_ conclude
 that the utility of a test should grow the more times it is executed. Just
 because it doesn't detect a fault _now_ doesn't mean it won't detect a fault
 _later_. This in turn implies a utility that is super-linear to fault detection.
@@ -214,17 +214,40 @@ $$u_d(T)$$, then its _true_ utility should be something that increases over time
 ## future test utility
 
 I want to model test utility in a way that considers future test runs.
-One possible definition would be
+There are many ways to do this, and to help narrow down on a metric I'll make
+the following assumption:
 
-$$u_f(T) = {u_d\left(T\right)}^{\left(1 + r\right)^N}$$
+<div class="fig" markdown="1">
+**Assumption:** _Regression detection is positively correlated with fault detection._
+
+I assume that the future regression detection power of a test generation
+technique/process (e.g., mutation testing, code coverage, random testing,
+partition testing) is positively correlated with the test generation technique's
+fault detection rate.
+</div>
+
+I'm phrasing this in terms of a test generation technique's fault detection
+power rather than in terms of the test suite because I want a robust test suite
+to have positive utility even when all tests pass.
+
+One way to construct a utility function that respects our assumption and takes
+future utility into account is to model it by assuming that the utility of
+regression detection in future software versions is linearly related to fault
+detection with coefficient $$r$$. Then, we get fault detection $$u_d(T)$$ from
+running testing our SUT with $$T$$, and then we get utility $$r \cdot u_d(T)$$
+each of $$N$$ times we run our suite on future software versions.  This gives us
+utility function:
+
+$$\begin{aligned}u_f(T) &= u_d\left(T\right) + N\cdot r\cdot u_d\left(T\right)\\ 
+                        &= \left(N r + 1\right) u_d\left(T\right)\end{aligned}$$
+
 
 
 where:
 - $$u_d$$ is the fault detection rate of the test suite on the current software
 
-- $$0 \leq r \leq 1$$ is the regression detection factor, and encodes how
-  effective the test suite will detecting future regressions in each future
-  software version, and
+- $$r > 0$$ is the regression coefficient, and encodes how effective the test suite
+  will detecting future regressions in each future software version, and
 
 - $$N$$ is the number of future versions of software the suite will be run on.
 
@@ -240,35 +263,38 @@ according to our definition.
 1. **The empty test suite has no utility:** 
    Since $$u_d(\varnothing) = 0$$, we have 
   
-   $$u_f(\varnothing) = {u_d(\varnothing)}^{1 + r} = 0^{1 + r} = 0$$
+   $$u_f(\varnothing) = {u_d(\varnothing)} + N\cdot r \cdot u_d(\varnothing) = 0 + N\cdot r\cdot 0 = 0$$
 
    for all values of $$r$$.
 
 2. **Monotonic increasing:**
-   $$u_d$$ is monotonic increasing, $$x^{1 + r}$$ is monotonic increasing in
-   $$x$$ for $$1 + r > 0$$, and composition of monotonic increasing functions is
-   monotonic increasing, so $${u_d(T)}^{1 + r}$$ is monotonic increasing.
+   $$u_d$$ is monotonic increasing, and $$Nr + 1 \geq 1$$, so $$u_f(T)$$ is
+   monotonic increasing
 
-3. **Submodularity:** $$u_d$$ is submodular
+3. **Submodularity:**
+
+   For clarity, write $$\alpha = Nr + 1$$ so that $$u_f = \alpha\cdot u_d$$.
+   We know that $$u_d$$ is submodular:
 
    $$u_d(T_1 \cup T_2) + u_d(T_1 \cap T_2) \leq u_d(T_1) + u_d(T_2)$$
 
-   Let $$x = 1 + r \geq 1$$. By [Jan Vondrak's lecture
-   notes][vondrak-submodular-functions], we can prove submodularity by showing
-   that the marginal utility of adding test $$t$$ to a test suite has
-   diminishing marginal utility. Formally, we denote the marginal utility
-   adding test $$t$$ to suite $$T$$ as $$u^T(i) = u(T + i) - u(T)$$.
-   Thus we want to show that for test suites $$T_1 \subset T_2$$ and test $$t$$
-   not in either $$T_1$$ or $$T_2$$,
+   and since $$\alpha > 0$$, we have
 
-   $$u_f^{T_1}(t) = u_d^{T_1}(t)^x \geq u_d^{T_2}(t)^x = u_f^{T_2}(t).$$
+   $$\alpha\left(u_d(T_1 \cup T_2) + u_d(T_1 \cap T_2)\right) \leq \alpha\left(u_d(T_1) + u_d(T_2)\right).$$
 
-   But this follows from submodularity of $$u_d$$ and $$x \geq 1$$:
-   since $$u_d^{T_1}(t) \geq u_d^{T_2}(t) \geq 0$$, and since $$x \geq 1$$,
-   we must have 
-   $$u_f^{T_1}(t) = u_d^{T_1}(t)^x \geq u_d^{T_2}(t)^x = u_f^{T_2}(t).$$
+   It follows that
 
-Thus, we have proved that $$u_f$$ is a utility function.
+   $$\begin{aligned}
+     u_f(T_1 \cup T_2) + u_f(T_1 \cap T_2) &= \alpha\cdot u_d(T_1 \cup T_2) + \alpha\cdot u_d(T_1 \cap T_2)\\
+                                           &= \alpha\left(u_d(T_1 \cup T_2) + u_d(T_1 \cap T_2)\right) \\
+                                           &\leq \alpha\left(u_d(T_1) + u_d(T_2)\right)\\
+                                           &= \alpha\cdot u_d(T_1) + \alpha\cdot u_d(T_2)\\
+                                           &= u_f(T_1) + u_f(T_2)\\
+     
+   \end{aligned}
+   $$
+
+Thus, we have proved that $$u_f$$ is a utility function, according to our definition above.
 </div>
 
 
@@ -276,25 +302,46 @@ Thus, we have proved that $$u_f$$ is a utility function.
 This model of utility is of course not perfect:
 
 - $$r$$ will not be constant for all software revisions; some versions of
-  software will make very minor changes, while some may include large refactors
-- the number of future versions $$N$$ cannot be known
+  software will make very minor changes, while some may include large refactors;
+- in fact, $$r$$ may systematically _decrease_ over time as the existing test
+  cases pertain less and less to future software versions
+- the number of future versions $$N$$ is not known.
 
-But the model also has some desirable features: It captures differences in use
-cases that, (e.g., personal projects versus enterprise software).
-For instance, if I'm testing a personal project then I probably won't have a
-million revisions of my software, so I can choose a relatively small $$N$$. This
-will lead to lower future testing utility, and I need fewer tests, and a weaker
-adequacy criterion will suffice (maybe coverage, maybe something weaker).
+But the model also has some desirable features: 
+- $$u_f$$ is also easy to implement, analyze, and interpret; after all, for a
+  fixed $$r$$ and fixed $$N$$, it is just a constant multiple of $$u_d$$.
 
-If I have a piece of enterprise software then I will have a large $$N$$, and
-I'll want to employ stronger adequacy criteria.
+- $$u_f$$ captures differences in use cases. For instance, if I'm working on a
+  personal project then I probably won't have too many revisions of my software,
+  so I can choose a relatively small $$N$$. This will lead to lower future
+  testing utility, and I need fewer tests, and a weaker adequacy criterion will
+  suffice (maybe coverage, maybe something weaker).
 
-## defining $$u_f$$ in practice
+  If I have a piece of enterprise software then I will have a larger $$N$$, and
+  I'll want to employ stronger adequacy criteria.
 
-Finding the exact exponent to use is difficult, but we might be able to get away
-with something as simple as $$u_f = u_d^2$$. We can quibble over the precise
-value, but I think it is worth investigating how this utility function performs
-versus bare fault detection.
+## how do the utility measures differ?
+
+Scaling $$u_d$$ by a constant factor leaves many properties of the measures
+unchanged. The ordering of utilities will be the same, as will the ratios:
+
+$$u_d(T_1) / u_d(T_2) = u_f(T_1) / u_f(T_2)$$
+
+But if we are comparing test utility against the _cost_ of writing and running
+new tests, this constant factor can make a big difference.
+
+Comparing test utility with the cost of writing test is not easy, but we can do
+something simple like try to translate the costs and benefits into dollar
+amounts. For instance, some potential dollar amounts (that I just came up with
+off the top of my head, don't read too much into them!) might be:
+
++ **$10,000:** money saved by detecting a fault or a regression with a test
+  suite
++ **$50:** cost of writing a single test
++ **$5:** cost run a test
+
+
+
 
 <!-- REFERENCES -->
 
