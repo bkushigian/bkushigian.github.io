@@ -16,22 +16,37 @@ group: poker-diaries
 
 <hr style="margin:2em;">
 
-I'm taking a couple days away from the tables, and I'm using this time to study.
+I've taken a couple days away from the tables, and I used this time to study.
 Poker is a huge game and it's hard to develop a plan of attack for learning the
-massive amounts of information needed to succeed at the table. High level
-strategy discussions are useful but good players often have wildly different
-opinions. Conversely, studying low level solver outputs can give very concrete
-information, but gives little to no intuition to _why_ the solver does what it
-does. What's more, there is a lot of _noise_ in a solver's outputs, with much of
-the complexity accounting for a very small amount of the winrate, and it's hard
-to come away with a concrete _implementable_ idea.
+massive amounts of information needed to succeed at the table. Poker solvers are
+a huge part of modern poker study, but they are not easy to use.  It's easy to
+get lost in what I like to call _solver noise_, especially if we are not clear
+about _why we are studying a solver's output_.
 
-How should I study the game to efficiently build a strategy that is _simple
-enough_ that I can implement it in game?  I have several things working in my
-favor.  First, I have a very powerful computer that can quickly run sims.
-Second, I am a programmer by trade, and this puts me in a position to write code
-to automatically analyze solver outputs, allowing me to quickly find high-level
-patterns.
+My goal in studying is to simplify the solver outputs as much as possible until
+there is a clear takeaway that I can use in my games. I want to build an
+implementable strategy, and often solver study does the exact opposite: I notice
+seventeen different patterns that sometimes hold, sometimes don't, and in game,
+rather than having cleared my mind of complexity, I am focused on unimportant
+details rather than the high-level points that will generate edge.
+
+So how should I study the game to efficiently build a strategy that is _simple
+enough_ that I can implement it in game? I have a principled approach: I want to
+_avoid introducing complexity to my strategy at all costs_. Now this is not to
+say that I will never do tricky things, or deviate my game plan based on opponent tendencies.
+But I want to keep my baseline strategy _dead simple_ and easy to know/execute.
+Overtime, I will find leaks in my game, places where I have over simplified. I
+will then introduce complexity to shore up those leaks, but only as necessary.
+
+This is not an easy task: simplifying an inherently complex system is
+non-trivial since tweaking one part of a strategy affects every other node of
+the game tree. However, I have several things working in my favor.  First, I
+have a very powerful computer that can quickly run simulations. This will let me
+quickly test ideas and _iterate_ my strategy building.  Second, I am a
+programmer by trade, and this puts me in a position to write code to
+automatically analyze solver outputs, allowing me to quickly find high-level
+patterns. After all, being able to quickly run 10k solves is not useful if I
+can't easily compile the data into something consumable and understandable.
 
 ## equilibrium
 
@@ -130,14 +145,13 @@ Flop,Global %,OOP Equity,OOP EV,OOP EQR,IP Equity,IP EV,IP EQR,BET 152 freq,CHEC
 ```
 
 This is not very readable, and to help me understand it I've been working on
-[Pious][https://github.com/bkushigian/pious], the Pio Utility Suite. The project
-is still in the brain dump phase, and it would honestly be hard for anyone else
-to hop in and use many parts of it right now, but there are a few parts of it
-that are easy to use today (assuming you know some Python). One of them is the
-aggregation report module, that allows you to view aggregation reports, filter
-them down based on certain criteria, plot different variables against one
-another, etc. Here is a sample session looking at the aggregation report of SB's
-cbet node:
+[Pious, the Pio Utility Suite][pious]. The project is still in the brain dump
+phase, and it would honestly be hard for anyone else to hop in and use many
+parts of it right now. But there are a few parts of it that are easy to use
+today (assuming you know some Python). One of them is the aggregation report
+module, that allows you to view aggregation reports, filter them down based on
+certain criteria, plot different variables against one another, etc. Here is a
+sample session looking at the aggregation report of SB's cbet node:
 
 ```python
 >>> import aggregation.report as ar
@@ -155,16 +169,23 @@ max      64.870000   169.516000   126.283000   100.000000   100.000000
 >>> r.plot()
 ```
 
-The last line I ask to plot the data, which produces the following plot:
+I begin by importing my library, giving it the easy-to-type handle `ar` (this is
+short for `aggregation.report`). Then I load up the aggregation report output by
+Pio (located at `"/Users/benku/DPS/PiousStrats/reports/SimpleTree/3BP/b66/SBvBTN/Root"`)
+as an `AggregationReport` object that I name `r`. I use `r.describe()` to get a
+quick overview (this shows that there are 1755 different flops, with a mean EV
+of 126.01 chips, and that across all boards the smallblind cbet about 51.7% of
+the time).  Finally in the last line I ask to plot the data, which produces the
+following plot:
 
 <div markdown="1" style="margin:1em; margin-top:2em;" >
 ![Pious Plotting an Aggregation Report](/assets/img/poker_diaries/002_pious_SBvBTN_3bp_all_boards.png)
 </div>
 
 Each color corresponds to a different board texture, and different sizes
-correspond to different high cards on the flop. The largest points are A-high boards,
-while smaller points correspond to smaller boards. Yellow/Orange boards are
-monotone boards, while greener boards are connected boards. Blue boards are
+correspond to different high cards on the flop. The largest points are A-high
+boards, while smaller points correspond to smaller boards. Yellow/Orange boards
+are monotone boards, while greener boards are connected boards. Blue boards are
 paired and trip boards. The colors aren't perfect just yet...it's hard to find
 20 distinct colors that each mean something and 'make sense together', but I'll
 iron that out. But it's easy to see patterns right away. For instance, flush
@@ -191,3 +212,4 @@ post.
 
 [play-optimal-poker]: https://www.thinkingpoker.net/poker-books/
 [piosolver]:https://piosolver.com/
+[pious]:https://github.com/bkushigian/pious
