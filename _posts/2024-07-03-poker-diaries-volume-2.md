@@ -16,19 +16,60 @@ group: poker-diaries
 
 <hr style="margin:2em;">
 
-I've taken a couple days away from the tables, and I used this time to study.
-Poker is a huge game and it's hard to develop a plan of attack for learning the
-massive amounts of information needed to succeed at the table. Poker solvers are
-a huge part of modern poker study, but they are not easy to use.  It's easy to
-get lost in what I like to call _solver noise_, especially if we are not clear
-about _why we are studying a solver's output_.
+I played my first session of the week last night, mixing in some $50nl and
+$100nl. Decent session but I only got 600 hands in due to a disrupted sleep
+schedule. I spent the 4th with my girlfriend and her family. I was kind of
+resisting going because I knew I had to totally disrupt my sleeping schedule (I
+went from going to bed at 4 am to waking up at 7am in 2 days), but I'm really
+happy I went. Balancing poker grinding with friends, loved ones, and life in
+general is notoriously tricky. It's easy to get wrapped up in the study/play
+cycle, and this is only worsened by weird sleep schedules. So it was really
+important for me to make time to do this, and I'm happy I did.
+
+The downside is that I'm horribly out of whack and I can't seem to settle back
+into my schedule. I lost a couple days of playing, and now I'm losing volume
+because of bad sleep. This means I'm probably only gonna get around 2k hands
+this week which, if I'm being honest, is really stressing me out.
+
+Though I took a couple days away from playing, I've still been studying.
+I'm currently _strategy building_, which is this one-time cost you have to pay
+at the beginning of your poker career to build an entire strategy from scratch.
+There are many ways to do this.  Some people will buy courses that outline the
+major strokes of a strategy (perhaps for a specific node of the gametree). I've
+always had a rough time watching courses, I get too distracted by details and
+don't make it through. With that said, I found [Uri's course on check
+raising](uri-check-raise) extremely helpful. Other folks will hire a coach.  I
+have an unofficial coach (or rather, an official coach who is also very generous
+and doesn't charge me money, even though I keep telling him I'm ripping him
+off), and I credit him for fundamentally changing the way I think about the
+game. He's worked through how he thinks about a bunch of different spots, and
+given me a system to work within. I use some of it, but I we definitely think
+about the game differently, and before this I never really had the time to
+invest to properly learn/implement his approach.
+
+While I've taken a lot from S, I really enjoy solving puzzles, and building a
+strategy from the ground up is really appealing. I'm running lots of simulations
+using a tool called [PioSOLVER](piosolver) to help me learn the mechanics of the
+game.
+
+Poker, however, is a huge game and it's hard to develop a plan of attack for
+learning the massive amounts of information needed to succeed at the table.
+Poker solvers, while incredibly useful and a huge part of modern poker study,
+are not easy to use.  It's easy to get lost in what I like to call _solver
+noise_, especially if we are not clear about _why we are studying a solver's
+output_.
 
 My goal in studying is to simplify the solver outputs as much as possible until
-there is a clear takeaway that I can use in my games. I want to build an
-implementable strategy, and often solver study does the exact opposite: I notice
-seventeen different patterns that sometimes hold, sometimes don't, and in game,
-rather than having cleared my mind of complexity, I am focused on unimportant
-details rather than the high-level points that will generate edge.
+there is a clear takeaway that I can use in my games. My goal is forever to "fit
+my thoughts on an index card". I want to build an implementable strategy, and that means
+have nice abstractions and understand the interactions between those abstractions.
+
+Solver study often results in the exact opposite: I might notice seventeen
+different patterns that sometimes hold, sometimes don't, and in game, rather
+than having cleared my mind of this low-level complexity, I am focused on
+unimportant details rather than the high-level points that will generate edge.
+I spend all my thought power navigating through the morass of details that are
+in the hand rather than finding the two or three things that _do_ matter.
 
 So how should I study the game to efficiently build a strategy that is _simple
 enough_ that I can implement it in game? I have a principled approach: I want to
@@ -213,3 +254,4 @@ post.
 [play-optimal-poker]: https://www.thinkingpoker.net/poker-books/
 [piosolver]:https://piosolver.com/
 [pious]:https://github.com/bkushigian/pious
+[uri-check-raise]:https://www.guerrilla.poker/courses/checkraising
