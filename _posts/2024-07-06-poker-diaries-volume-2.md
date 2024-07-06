@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "poker diaries, volume 2: study"
-date: 2024-07-01 0:00:00 -0800
+date: 2024-07-06 0:00:00 -0800
 comments: true
 draft: true
 published: true
@@ -16,20 +16,71 @@ group: poker-diaries
 
 <hr style="margin:2em;">
 
+## so far this week
+
+This post isn't really about my sessions this week since I haven't played much,
+but I'll give a brief (for me) update.
 I played my first session of the week last night, mixing in some $50nl and
-$100nl. Decent session but I only got 600 hands in due to a disrupted sleep
-schedule. I spent the 4th with my girlfriend and her family. I was kind of
-resisting going because I knew I had to totally disrupt my sleeping schedule (I
-went from going to bed at 4 am to waking up at 7am in 2 days), but I'm really
+$100nl. It was a decent session but I only got around 770 hands in due to a
+disrupted sleep schedule. I spent the 4th with my girlfriend and her family. I
+was kind of resistant of going because I knew it would disrupt my sleep schedule
+(I went from going to bed at 4 am to waking up at 7am in 2 days), but I'm really
 happy I went. Balancing poker grinding with friends, loved ones, and life in
 general is notoriously tricky. It's easy to get wrapped up in the study/play
-cycle, and this is only worsened by weird sleep schedules. So it was really
-important for me to make time to do this, and I'm happy I did.
+cycle, and this is only worsened by a weird sleep schedule where my life doesn't
+line up with anyone elses. So it was really important for me to make time to do
+this, and I'm happy I did.
 
-The downside is that I'm horribly out of whack and I can't seem to settle back
-into my schedule. I lost a couple days of playing, and now I'm losing volume
-because of bad sleep. This means I'm probably only gonna get around 2k hands
-this week which, if I'm being honest, is really stressing me out.
+But yeah, it was good to run well at my first $100nl session.
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![Graph of Friday's session](/assets/img/poker_diaries/002_graph.png)
+  <div><p><i>Graph of Saturday's session.</i></p></div>
+</div>
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![Overview by stake for Friday's session](/assets/img/poker_diaries/002_stake_summary.png)
+  <div><p><i>Breakdown by stake.</i></p></div>
+</div>
+
+Overall 771 hands is meaningless, pure noise really. However, I've been
+consistently winning between 10bb-20bb/100 so far, which is a good sign.  If you
+notice, my VPIP and 3Bet frequencies are pretty high for 100nl. This is because
+I played some heads up (2 player) which has very high VPIP and 3bet frequencies.
+I love heads up, and I thoroughly enjoy playing versus players on Ignition who
+definitely have _not_ studied the format. For instance, the HU 4betting range in
+is extremely polar, and you end up 4betting hands like J5s.
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![HUNL 4Betting Range](/assets/img/poker_diaries/002_HU_4bet_range.png)
+  <div><p><i>Graph of Saturday's session.</i></p></div>
+</div>
+
+This led to the following hand:
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![J5s HUNL](/assets/img/poker_diaries/002_HU_J5s_hh.png)
+  <div><p><i>Graph of Saturday's session.</i></p></div>
+</div>
+
+They snap quit me after this hand, probably thinking I was the biggest fish in
+the world.  Truth be told, I probably didn't play post flop accurately. I might
+have wanted to barrel turn, but I felt like I had the best hand a lot, and I
+might narrow villain's range if I continued putting money in to where I only get
+called by better.
+
+<hr style="margin:2em;">
+
+Anyway, where was I? Oh right, the downside of taking a couple days off is that
+now I'm horribly out of whack and I can't seem to settle back into my schedule.
+I lost a couple days of playing, and now I'm losing volume because of bad sleep.
+This means I'm probably only gonna get around 2.5k hands this week which, if I'm
+being honest, is stressing me out. I realize I'm being kinda crazy about it, but
+I really want to prove to myself that I can play professionally, and a big part
+of that is consistently showing up. I also only have another couple months to do
+this before I go back to school, so time really is of the essence.
+
+## strategy building 
 
 Though I took a couple days away from playing, I've still been studying.
 I'm currently _strategy building_, which is this one-time cost you have to pay
@@ -38,49 +89,100 @@ There are many ways to do this.  Some people will buy courses that outline the
 major strokes of a strategy (perhaps for a specific node of the gametree). I've
 always had a rough time watching courses, I get too distracted by details and
 don't make it through. With that said, I found [Uri's course on check
-raising](uri-check-raise) extremely helpful. Other folks will hire a coach.  I
-have an unofficial coach (or rather, an official coach who is also very generous
-and doesn't charge me money, even though I keep telling him I'm ripping him
-off), and I credit him for fundamentally changing the way I think about the
-game. He's worked through how he thinks about a bunch of different spots, and
-given me a system to work within. I use some of it, but I we definitely think
-about the game differently, and before this I never really had the time to
-invest to properly learn/implement his approach.
+raising](uri-check-raise) extremely helpful and I'm going to continue to watch
+other courses here and there.
 
-While I've taken a lot from S, I really enjoy solving puzzles, and building a
-strategy from the ground up is really appealing. I'm running lots of simulations
-using a tool called [PioSOLVER](piosolver) to help me learn the mechanics of the
-game.
+Other folks will hire a coach and have them work through a strategy.  I have an
+unofficial coach (or rather, an official coach who I also count as a friend and
+is very generous and doesn't charge me money, even though I keep telling him I'm
+ripping him off), Salamander, who I credit for fundamentally changing the way I
+think about the game. He's worked through how he thinks about a bunch of
+different spots, and given me a system to work within. I use some of it, but I
+haven't incorporated everything he's shown me yet. I'm slowly working up to
+that, but I also like to figure things out for myself. I've also been too busy
+before this to be able to put the time in to fully understand and implement his
+approach.
+
+While I've taken a lot from Salamander, I really enjoy solving puzzles, and
+building a strategy from the ground up is really appealing. I'm running lots of
+simulations using a tool called [PioSOLVER](piosolver) to help me learn the
+mechanics of the game.
 
 Poker, however, is a huge game and it's hard to develop a plan of attack for
 learning the massive amounts of information needed to succeed at the table.
-Poker solvers, while incredibly useful and a huge part of modern poker study,
-are not easy to use.  It's easy to get lost in what I like to call _solver
-noise_, especially if we are not clear about _why we are studying a solver's
-output_.
+Poker solvers like Pio, while incredibly useful and a huge part of modern poker
+study, are not easy to use.  It's easy to get lost in what I like to call
+_solver noise_, especially if we are not clear about _why we are studying a
+solver's output_.
 
 My goal in studying is to simplify the solver outputs as much as possible until
 there is a clear takeaway that I can use in my games. My goal is forever to "fit
-my thoughts on an index card". I want to build an implementable strategy, and that means
-have nice abstractions and understand the interactions between those abstractions.
+my thoughts on an index card". I want to build an implementable strategy, and
+that means having nice abstractions and understanding the interactions between
+those abstractions.
 
 Solver study often results in the exact opposite: I might notice seventeen
-different patterns that sometimes hold, sometimes don't, and in game, rather
-than having cleared my mind of this low-level complexity, I am focused on
-unimportant details rather than the high-level points that will generate edge.
-I spend all my thought power navigating through the morass of details that are
-in the hand rather than finding the two or three things that _do_ matter.
+different patterns that sometimes hold, sometimes don't, and in game this can
+lead to juggling seventeen low level concepts rather than quickly isolating the
+two or three crucial pieces of information that will lead to me generating edge.
 
 So how should I study the game to efficiently build a strategy that is _simple
 enough_ that I can implement it in game? I have a principled approach: I want to
 _avoid introducing complexity to my strategy at all costs_. Now this is not to
-say that I will never do tricky things, or deviate my game plan based on opponent tendencies.
-But I want to keep my baseline strategy _dead simple_ and easy to know/execute.
-Overtime, I will find leaks in my game, places where I have over simplified. I
-will then introduce complexity to shore up those leaks, but only as necessary.
+say that I will never do tricky things, or deviate my game plan based on
+opponent tendencies.  But I want to keep my baseline strategy _dead simple_ and
+easy to know/execute.  Overtime, I will find leaks in my game, places where I
+have over simplified. I will then introduce complexity to shore up those leaks,
+but only as necessary.
 
-This is not an easy task: simplifying an inherently complex system is
-non-trivial since tweaking one part of a strategy affects every other node of
+However, complexity is part of the game, and I'm going to need to put it
+somewhere. I've decided that I want to put my complexity in later nodes of the
+game tree. Why? Well, if I range bet a board then it's likely that I just take
+the pot down, and I might never need to reach the point where my strategy gets
+complex. Also, I think that I'll be better able to navigate complex situations
+than my opponents because I am putting in the work.
+
+Finally, I want to keep my opponents ranges _wide_. If you believe that most
+players suck at poker, then you should also believe that you want them to make
+as many decisions as possible. This makes range checks very appealing to me, and
+it's something that I'm toying with implementing.
+
+For example, I'm studying SBvBTN 3bet pots right now. I ran all 1755
+strategically distinct flops with a bunch of different configurations, including
+allowing mixed cbet sizes, range b33, and range checks for the SB. I then
+isolated different board textures and plotted the EV of each "simplified" cbet
+strategy for the SB against the EV of the mixed strategy. For example, here
+is what I found for A-high boards:
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![Comparing the EVs between a mixed strategy and a range bet strategy](/assets/img/poker_diaries/002_A_high_range_b33.png)
+  <div>
+    <i>Comparing the EVs of a mixing strategy and a range bet strategy for
+    non-flush A high boards</i>
+  </div>
+</div>
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+  ![Comparing the EVs between a mixed strategy and a range bet strategy](/assets/img/poker_diaries/002_A_high_range_check.png)
+  <div>
+    <i>Comparing the EVs of a mixing strategy and a range check (no cbetting)
+    strategy for
+    non-flush A high boards</i>
+  </div>
+</div>
+
+Currently I'm using the range bet strategy because it is higher EV, but I like
+the idea of implementing a range check board. It's lower EV, but people will
+play worse versus it. Everyone has played versus a range bet strat, but people
+do not play well versus checks. By bringing folks to delay and double delay
+lines I think I can realize some _serious_ edge. People tend to play pretty face
+up in unfamiliar or understudied spots.
+
+<hr style="margin:2em;">
+
+
+Strategy building is not an easy task: simplifying an inherently complex system
+is non-trivial since tweaking one part of a strategy affects every other node of
 the game tree. However, I have several things working in my favor.  First, I
 have a very powerful computer that can quickly run simulations. This will let me
 quickly test ideas and _iterate_ my strategy building.  Second, I am a
@@ -89,7 +191,12 @@ automatically analyze solver outputs, allowing me to quickly find high-level
 patterns. After all, being able to quickly run 10k solves is not useful if I
 can't easily compile the data into something consumable and understandable.
 
-## equilibrium
+## solvers and equilibria
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+![PioSOLVER Output](/assets/img/poker_diaries/002_solver_output.png)
+</div>
+<hr style="margin:2em;">
 
 Poker solvers approximate "good" poker strategies called _Nash equilibria_.
 A Nash equilibrium is just a strategy with a very desirable mathematical
@@ -111,47 +218,41 @@ that the opponent is _indifferent_ between bluff catching and folding. This
 dynamic is captured nicely in the AKQ game which Andrew Brokos' [Play Optimal
 Poker][play-optimal-poker] sums up nicely.
 
-## solvers
-
-<div markdown="1" style="margin:1em; margin-top:2em;" >
-![PioSOLVER Output](/assets/img/poker_diaries/002_sample_solver_output.png)
-</div>
-<hr style="margin:2em;">
-
 Equilibria are far too hard to compute by hand, and we appeal to solvers
-such as [PioSOLVER][piosolver] to compute them (or, accurately, approximate
+such as [PioSOLVER][piosolver] to compute them (or, more accurately, approximate
 them) for us. Unfortunately, the output is complex, and we can't just look at a
 sim for a few minutes and understand the it. What's more, even if we understand
 a single board relatively well, we still don't know anything about different
 boards.
 
 So how should we proceed? There are different philosophies on this. Some folks
-delve deep into a sim with the intention of learning all its peculiarities. This
-can be fun, and it can certainly give you insights into the underlying
-mechanisms that cause the strategy. But it's also easy to get sidetracked by
-minutia. Some players get obsessed with frequencies: this board bets 40% while
-this one bets 45%. Other players try to compute simple strategies that are easy
-to implement. These players are more likely to play massive volume: they may not
+delve deep into a sim with the intention of learning all its peculiarities. It's important
+to spend some time doing this, and what's more it can be very fun to do this (if
+you're a fuckin nerd like me). But it's also easy to get sidetracked by minutia.
+Some players get obsessed with frequencies: this board bets 40% while this one
+bets 45%. Other players try to compute simple strategies that are easy to
+implement. These players are more likely to play massive volume: they may not
 have the most complex strategy but it's dead simple to play, and this allows
 them to play many tables at once.
 
 I don't think I'm going to ever be a volume player, and I love the creativity of
 poker. But rather than trying to grapple with all of its complexity at once I
 want to learn the broad strokes first. I want to start with a dead simple
-strategy and introduce complexity as needed.
+strategy and introduce complexity as needed. I want to understand the underlying
+mechanics of a position and figure out what my overall range wants to do, and
+then figure out how my hand fits into that game plan.
 
-To do this I'm running tens of thousands of sims. I'll begin by identifying
-a "spot" I want to understand better, such as
-_"Action folds to the button who opens to 2.5bb. The smallblind raises to 11bb,
-the bigblind folds, and the button calls."_
-At this point, the game would proceed by going to a flop, where the smallblind
-would be first to act. First, there are 1755 strategically distinct flops that
-can come. Of course some flops are similar to others, but to be totally rigorous
-I want to run sims for each flop in a spot.
-I also want to construct a _game tree_ which tells the solvers which actions
-each player is allowed to perform. Can they each bet/raisex 4 different sizes at
-each node? Or maybe a player is only allowed one size? Each choice will tell me
-something different.
+To do this I'm running tens of thousands of sims. I'll begin by identifying a
+"spot" I want to understand better, such as _"Action folds to the button who
+opens to 2.5bb. The smallblind raises to 11bb, the bigblind folds, and the
+button calls."_ At this point, the game would proceed by going to a flop, where
+the smallblind would be first to act. First, there are 1755 strategically
+distinct flops that can come. Of course some flops are similar to others, but to
+be totally rigorous I want to run sims for each flop in a spot.  I also want to
+construct a _game tree_ which tells the solvers which actions each player is
+allowed to perform. Can they each bet/raisex 4 different sizes at each node? Or
+maybe a player is only allowed one size? Each choice will tell me something
+different.
 
 Typically there is a tradeoff: more options for a player leads to longer solve
 times and higher complexity of that player's strategy, but also to more EV
@@ -248,8 +349,11 @@ r.plot(legend=False)
 </div>
 
 In this way we can get quick high-level visualizations of spots to better
-understand them. I'll talk more about some of Pious's capabilities in the next
-post.
+understand them. I can also compare different sims (in fact, the plots above
+comparing range checks and range bets against a mixing strategy were made using
+Pious). I'll talk more about some of Pious's capabilities in the next post, and show
+how I am using it to strategy build.
+
 
 [play-optimal-poker]: https://www.thinkingpoker.net/poker-books/
 [piosolver]:https://piosolver.com/
