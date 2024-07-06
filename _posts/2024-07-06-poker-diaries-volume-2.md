@@ -3,7 +3,7 @@ layout: post
 title: "poker diaries, volume 2: study"
 date: 2024-07-06 0:00:00 -0800
 comments: true
-draft: true
+draft: false
 published: true
 categories: poker
 tags: poker
