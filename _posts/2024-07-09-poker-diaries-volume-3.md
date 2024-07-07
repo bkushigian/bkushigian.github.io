@@ -3,7 +3,7 @@ layout: post
 title: "poker diaries, volume 3: variance"
 date: 2024-07-07 0:00:00 -0800
 comments: true
-draft: true
+draft: false
 published: true
 categories: poker
 tags: poker
