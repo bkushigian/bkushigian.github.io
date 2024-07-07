@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "poker diaries, volume 3: variance"
-date: 2024-07-07 0:00:00 -0800
+date: 2024-07-09 0:00:00 -0800
 comments: true
-draft: false
+draft: true
 published: true
 categories: poker
 tags: poker
@@ -16,10 +16,19 @@ group: poker-diaries
 
 <hr style="margin:2em;">
 
-I'm wrapping up week three of my little poker experiment and I thought this
-would be a great time to talk about variance. I'm going to start off with some
-high level stuff on variance and then get to the poker content below.
+I'm wrapping up week three of my little poker experiment and I hit a bit of a
+rough patch, so I thought this would be a great time to talk about variance.
+I'm going to start off with some some high level stuff about this past week,
+then talk about variance for a bit, then get into the nitty gritty details of
+some poker spots below.
 
+## recapping the week
+
+In [volume 2]()
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+![PioSOLVER's Range Explorer](/assets/img/poker_diaries/003_primedope_5bb_100k_hands.png)
+</div>
 An intuitive definition of variance is how much data points differ from the
 mean. High variance means lots of different outcomes. Low variance means the
 outcomes will be pretty similar.
@@ -62,4 +71,5 @@ Anyway, I don't wanna go too far down that rabbit hole, it's not really the
 point. However, I do want to talk about variance and how it affects me as a
 poker player and a human being.
 
-## 
+
+[poker-diaries-volume-2]: 
