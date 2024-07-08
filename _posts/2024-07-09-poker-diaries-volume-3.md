@@ -10,6 +10,13 @@ tags: poker
 group: poker-diaries
 ---
 
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+![Cumulative winnings through first three weeks](/assets/img/poker_diaries/003_graph_w3_cumulative.png)
+</div>
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+![Cumulative statistics through first three weeks](/assets/img/poker_diaries/003_stats_w3_cumulative.png)
+</div>
 
 <hr style="margin:2em;">
 
@@ -21,16 +28,45 @@ some poker spots below.
 
 ## recapping the week
 
-I covered my Friday session in [volume 2][volume-2]. I've continued struggling
-with sleep, but I should be back on my sleep schedule finally (I hope). Since
-I've been low on sleep I've been playing 3 tables instead of 4. This means I can
-focus more and won't be overloaded 4 tough decisions all at once.
+<div>
+<div markdown="1" style="margin:1em; margin-top:2em;">
+![Week three's session](/assets/img/poker_diaries/003_graph_w3.png)
+</div>
 
-Another side effect of low sleep is I'm less robust to annoyance, which is one
-of my main happiness leaks. Some sessions (foreshadowing alert), you get put in
-gross spot after gross spot, nothing is easy, and you just feel like you're
-playing awful. And I had just such a session on Saturday.
+<div markdown="1" style="margin:1em; margin-top:2em;">
+![Week three's session](/assets/img/poker_diaries/003_stats_w3.png)
+</div>
+<div><font size="-1">
+<p><i>
+    My graph and stats from this past week. All the big pots went the wrong way.
+    I ran big hands into straights and flushes a bunch, lost some flips, ran a
+    triple barrel bluff into top pair, and overall ran pretty bad. I was down 4
+    buyins (that is, -$400) halfway through Saturday's session, but a player who
+    I'd tagged as a button clicker (that is, a spewy fish), donated $250 to me
+    over two hands, which somewhat saved my session.
+</i></p>
+<p><i>
+    Sunday was largely break even until I won a couple big pots, then lost 4
+    buyins over the course of about 30 hands (a few minutes). I decided to sit
+    out.
+</i></p>
+</font></div>
+</div>
 
+<hr style="margin:2em;">
+
+I covered my Friday session in [volume 2][volume-2]. My week took a downward
+turn over the next two sessions. I put in most of my volume at $100nl and ran
+pretty bad.  I overplayed some spots, some of which are good in theory, but most
+of which are questionable in practice. I might have an entire post devoted to
+punting as it's one of my favorite parts of the game.
+
+I've continued struggling with sleep, but I should be back on my sleep schedule
+finally (I hope). Since I've been low on sleep I've been playing 3 tables
+instead of 4. This means I can focus more and won't be overloaded 4 tough
+decisions all at once.
+
+<!--
 <div markdown="1" style="margin:1em; margin-top:2em;" >
 ![Saturday's swingy session](/assets/img/poker_diaries/003_a_swingy_session.png)
 <div><font size="-1">
@@ -44,6 +80,7 @@ playing awful. And I had just such a session on Saturday.
 </i></p>
 </font></div>
 </div>
+-->
 
 I was 3 tabling $100nl. I started earlier in the day (maybe 3pm or so), and was
 just running into it. I sat out after a couple hours down $340, and sat back in
