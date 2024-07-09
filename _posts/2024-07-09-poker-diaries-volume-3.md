@@ -1,21 +1,18 @@
 ---
 layout: post
 title: "poker diaries, volume 3: variance"
-date: 2024-07-09 0:00:00 -0800
+date: 2024-07-09 20:00:00 -0800
 comments: true
 draft: false
-published: true
+published: false
 categories: poker
 tags: poker
 group: poker-diaries
+permalink: /poker-diaries-3-variance/
 ---
 
 <div markdown="1" style="margin:1em; margin-top:2em;" >
 ![Cumulative winnings through first three weeks](/assets/img/poker_diaries/003_graph_w3_cumulative.png)
-</div>
-
-<div markdown="1" style="margin:1em; margin-top:2em;" >
-![Cumulative statistics through first three weeks](/assets/img/poker_diaries/003_stats_w3_cumulative.png)
 </div>
 
 <hr style="margin:2em;">
@@ -23,8 +20,9 @@ group: poker-diaries
 I'm wrapping up week three of my little poker experiment and I hit a bit of a
 rough patch, so I thought this would be a great time to talk about variance.
 I'm going to start off with some some high level stuff about this past week,
-then talk about variance for a bit, then get into the nitty gritty details of
-some poker spots below.
+then talk about variance in general. I go into some nitty gritty hand review
+details in [this week's companion
+post]({{site.baseurl}}/poker-diaries-3-hand-reviews/).
 
 ## recapping the week
 
@@ -55,18 +53,24 @@ some poker spots below.
 
 <hr style="margin:2em;">
 
-I covered my Friday session in [volume 2][volume-2]. My week took a downward
-turn over the next two sessions. I put in most of my volume at $100nl and ran
-pretty bad.  I overplayed some spots, some of which are good in theory, but most
-of which are questionable in practice. I might have an entire post devoted to
-punting as it's one of my favorite parts of the game.
+My Friday session, which I covered in [volume 2][volume-2], went well enough,
+but after that things took a turn.  I played sessions on Saturday and Sunday,
+with most of my volume at $100nl, and lost just about every pot.  I ran a couple
+bluffs that may or may not have been advisable, and I took a line with KK that
+is a thing in theory (at least in some spots) but maybe not so much in practice.
 
-I've continued struggling with sleep, but I should be back on my sleep schedule
-finally (I hope). Since I've been low on sleep I've been playing 3 tables
-instead of 4. This means I can focus more and won't be overloaded 4 tough
-decisions all at once.
+I also played some hands really well, and the truth is that I just always had
+the second best hand. I lost with sets, two pair, and overpairs repeatedly.
+You're just gonna lose money when that happens. I'm a little frustrated at always
+having the losing hand, but that's just poker. I'm more frustrated that I pushed
+a little too hard, made some questionable high variance decisions, and ended up
+having to sit out because I wasn't sure I could trust my decision making.
+More on that [in this week's hand review companion post]({{site.baseurl}}/poker-diaries-3-hand-reviews/).
 
-<!--
+<hr style="margin:2em;">
+
+### saturday
+
 <div markdown="1" style="margin:1em; margin-top:2em;" >
 ![Saturday's swingy session](/assets/img/poker_diaries/003_a_swingy_session.png)
 <div><font size="-1">
@@ -80,25 +84,78 @@ decisions all at once.
 </i></p>
 </font></div>
 </div>
--->
 
-I was 3 tabling $100nl. I started earlier in the day (maybe 3pm or so), and was
-just running into it. I sat out after a couple hours down $340, and sat back in
-a couple hours later, and after some initial runbad, I broke even for a couple
-hours before a player kindly donated $250 to me at the end of the session. I'll
-go into specific hands later, but my main takeaway is that I played pretty well
-overall. I misplayed a couple spots, and that definitely cost me some money, but
-they weren't easy spots (well, one of them was, and I should have saved $30 on a
-river...more on that in a bit).
+I've continued struggling with sleep, but I should be back on my sleep schedule
+finally (I hope). Since I was low on sleep I  played 3 tables instead of 4 on
+Saturday, leading to more focus but at a lower volume. This is a slam dunk
+decision, and I think 3 tabling is actually kind of overpowered at my current
+level, especially while I'm trying to improve.
 
-<!-- TODO: finish this section...-->
-I got back to the tables Sunday (_todo..._)
+
+I started earlier in the day (maybe 3pm or so), and was just running into it. I
+sat out after a couple hours down $340, and sat back in a couple hours later,
+and after some initial runbad, I broke even for a couple hours before a player
+kindly donated $250 to me at the end of the session.  I played pretty well
+overall, but I misplayed a couple spots, and that definitely cost me some money,
+but they weren't easy spots (well, one of them was, and I should have saved $30
+on a river).
+
+### sunday
+
+<div markdown="1" style="margin:1em; margin-top:2em;" >
+![Sunday's downswing](/assets/img/poker_diaries/003_graph_sunday_downswing.png)
+<div><font size="-1">
+<p><i>
+    My graph from Sunday. Everything was going fine until...
+</i></p>
+</font></div>
+</div>
+I felt better rested on Sunday and hopped into some games. Games were good but I
+couldn't make a hand so I was largely break even until I won a couple of pots in
+quick succession. I had been just about ready to take a break so I sat out.
+
+I rowed and got a run in (this is one of my favorite parts of playing poker: I
+exercise a _ton_ to relieve stress), had some lunch, and then sat back in.  I
+won a few pots and was feeling good until I got stacked in a 3bet pot w/ KK.  I
+took a line that I have definitely seen in solver land, and I understand at a
+high level why this is happening, but I'm not sure if it makes sense in
+practice, especially when you take mental game aspects into account.
+I quickly lost a few more big pots, including a river bluff that I should not
+have fired (I actually like it a lot in theory, but in practice it is torching).
+
+This is a common theme of mine, and probably the root of my biggest leak. I find
+some really cool lines, and versus better players they might work. However, I'm
+not playing against better players. I'm playing against bad players who tell me
+they have good hands, and I just shouldn't have any bluffs here.
+
+Balancing considerations is a common problem, and it's hard to do. My first
+thought shouldn't be "I have a great bluff combo". It should be "Is this node
+underbluffed or overbluffed? Should I have any bluffs at all?"
+
+I'm very good at extracting value from bad players. In many ways I think of
+myself as a fish whisperer. I'm able to pick up on subtle timings, read into
+their sizings, and often I can narrow their range down to their exact hand.
+
+However, when a bad player tells me exactly what they have and I've been the
+aggressor with a good hand (or a good bluffing candidate), I have a very hard
+time letting the hand go. I think of this as a kind of mental rigidity that I
+need to break out of, an inflexibility of the mind. My opponent has done a weird
+thing, and it almost certainly means strength, and now it's incumbent upon me to
+let my hand go. This is maybe my biggest leak right now. I am very strong at
+reasoning through spots but sometimes I don't know how to let up on the gas, or
+fold two pair when the flush comes in and the fish snap jams. This can lead to
+some pretty amazing plays, but also some pretty spectacular punts.
+
+And truth be told, I kind of like this about my game. I am not easy to play
+against, and while these tendencies cost me money this week they have made me
+money lots of other weeks. This is not an issue of removing my aggression from
+the game, but rather an issue of refining it.
 
 ## variance (in poker)
 
-I lost $140 over 765 hands. This doesn't really bother me because I have played
-enough poker to know it's part of the game, and to see how much edge I have over
-the pool. But lots of people would see this session and be freaked out. So I
+I lost $288 over 2,051 hands this week. To the uninitiated this might seem like
+a big loss, but this is nothing. I've way more in less time. Losses are part of
+the game.  But lots of people would see this session and be freaked out. So I
 figured I'd chat a bit about the role that variance plays in poker, and
 ultimately in life.
 
@@ -106,8 +163,9 @@ There is randomness in poker, as there is in everything. When there is
 randomness we can talk about certain statistical properties such as the _mean_.
 Roughly, the mean of some random event is what we expect to happen, on average,
 if we were to observe that random event a bajillion times. Yeah yeah, this
-definition is a bit circular, elliptical at the very least, but we're not gonna
-let that stop us.
+definition is a bit circular, but it gets the point across so let's not let that
+stop us. The mean is sometimes called the _expected value_, or _EV_. In poker
+and in life we want to do things that have positive expected value.
 
 Another property in the face of randomness is _variance_.  An intuitive
 definition of variance is how much data points differ from the mean. High
@@ -116,15 +174,17 @@ expected, outcome. Low variance means that the data points will always be
 relatively close to the expected outcome.
 
 For instance, flipping a coin for $1 has much lower variance than flipping a
-coin for $1,000,000. Both have a mean of $0 (I win and lose half the time in
-both scenarios), but the outcomes of the flip for $1,000,000 are 1,000,000 times
-further away from the mean of $0 than the outcomes of the flip for $1.
+coin for $1,000,000. Both have an expected value of $0 (I win and lose half the
+time in both scenarios), but the outcomes of the flip for $1,000,000 are
+1,000,000 times further away from the mean of $0 than the outcomes of the flip
+for $1.
 
-We measure variance in poker winrates in terms of bb/100. On average, no limit
-holdem winrates have about 100bb/100 variance. This means that every hundred
-hands we are 70% confident that our results will be within 100bb of our expected
-winrate. That's actually pretty crazy: 30% of the time we will be a buyin above
-or a buyin below our expected win rate!
+We measure the amount of variance in poker winrates with _standard deviation_,
+which is in units of bb/100. On average, no limit holdem winrates have a
+standard deviation of about 100bb/100. This means that every hundred hands we
+are 70% confident that our results will be within 100bb of our expected winrate.
+That's actually pretty crazy: 30% of the time we will be a buyin above or a
+buyin below our expected win rate!
 
 We can visualize variance using the [Prime Dope variance calculator][prime-dope].
 Prime dope simulates playing a bunch of poker hands, modeled as a distribution
@@ -251,7 +311,6 @@ crucial when we reason about risk.
 Anyway, I don't wanna go too far down that rabbit hole, it's not really the
 point. However, I do want to talk about variance and how it affects me as a
 poker player and a human being.
-
 
 [volume-2]: https://bkushigian.github.io/2024/07/06/poker-diaries-volume-2.html
 [prime-dope]:https://www.primedope.com/poker-variance-calculator/
