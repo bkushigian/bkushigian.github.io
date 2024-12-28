@@ -49,22 +49,47 @@ code I'm playing music or poker.
 
 ## pubs
 
+  <!-- EMIW: ISSTA '24 -->
   <p><span class="pub-title">
+  <a href="https://dl.acm.org/doi/pdf/10.1145/3650212.3680310">
+  equivalent mutants in the wild: identifying and efficiently suppressing equivalent mutants for java programs
+  </a>
+  </span><br/>
+  by Benjamin Kushigian, Samuel J. Kaufman, Ryan Featherman,
+  Hannah Potter, Ardi Madadi, René Just.<br/>
+  ISSTA '24.
+  </p>
+
+  <!-- FPGA: ASPLOS '24 -->
+  <p><span class="pub-title">
+  <a href="http://cnandi.com/docs/icst24-cr.pdf">
+  using mutation testing to improve and minimize test suites for smart contracts (industry track)
+  </a>
+  </span><br/>
+  by Enzo Nicourt, Benjamin Kushigian, Chandrakana Nandi, Yliès Falcone.<br/>
+  ICST '24.
+  </p>
+
+  <!-- FPGA: ASPLOS '24 -->
+  <p><span class="pub-title">
+  <a href="https://dl.acm.org/doi/pdf/10.1145/3620665.3640387">
   fpga technology mapping using sketch-guided program synthesis
+  </a>
   </span><br/>
   by Gus Smith, Benjamin Kushigian, Vishal Canumalla, Andrew Cheung, Steven
   Lyubomirsky, Sorawee Porncharoenwase, René Just, Gilbert Louis Bernstein,
   Zachary Tatlock.<br/>
-  ASPLOS '24<br/>
-  <a href="https://dl.acm.org/doi/pdf/10.1145/3620665.3640387">PDF</a>
-  </p>
-  <p><span class="pub-title">
-  medusa: mutant equivalent detection using satisfiability analysis
-  </span><br/>
-  by Benjamin Kushigian, Amit Rawat, and René Just.<br/>
-  In Proceedings of the International Workshop on Mutation Analysis (Mutation), April 22 2019.<br/>
-  <a href="/assets/files/medusa_icst_2019.pdf">PDF</a>
+  ASPLOS '24.
   </p>
 
+  <!-- Medusa: Proceedings of International Workshop on Mutation Analysis '19 -->
+  <p><span class="pub-title">
+  <a href="/assets/files/medusa_icst_2019.pdf">
+  medusa: mutant equivalent detection using satisfiability analysis
+  </a>
+  </span><br/>
+  by Benjamin Kushigian, Amit Rawat, and René Just.<br/>
+  In Proceedings of the International Workshop on Mutation Analysis (Mutation), April 22 2019.
+  </p>
 
 [rjust-site]:https://people.cs.umass.edu/~rjust/
